@@ -184,21 +184,21 @@ public class DhtServer {
 		myAdr = new InetSocketAddress(myIp,sock.getLocalPort());
 		
 		// initialize data structures	
-		map = new HashMap<String,String>();
-		cache = new HashMap<String,String>();
-		rteTbl = new LinkedList<Pair<InetSocketAddress,Integer>>();
+		map = new HashMap<>();
+		cache = new HashMap<>();
+		rteTbl = new LinkedList<>();
 
 		// join the DHT (if not the first node)
-		hashRange = new Pair<Integer,Integer>(0,Integer.MAX_VALUE);
+		hashRange = new Pair<>(0,Integer.MAX_VALUE);
 		myInfo = null;
 		succInfo = null;
 		predInfo = null;
 		if (predecessor != null) {
 			join(predecessor);
 		} else {
-			myInfo = new Pair<InetSocketAddress,Integer>(myAdr,0);
-			succInfo = new Pair<InetSocketAddress,Integer>(myAdr,0);
-			predInfo = new Pair<InetSocketAddress,Integer>(myAdr,0);
+			myInfo = new Pair<>(myAdr,0);
+			succInfo = new Pair<>(myAdr,0);
+			predInfo = new Pair<>(myAdr,0);
 		}
 
 
@@ -338,7 +338,17 @@ public class DhtServer {
 	 *	your documentation here
 	 */
 	public static void join(InetSocketAddress predAdr) {
-		// your code here
+		//setting pred information
+		predInfo.left = predAdr;
+		predInfo.right = 0;
+		//setting my information (assuming int is the node number)
+		myInfo.left = myAdr;
+		myInfo.right = 1;
+		//successor info
+		succInfo.left = predAdr;
+		succInfo.right = 0;
+
+
 	}
 	
 	/** Handle a join packet from a prospective DHT node.
@@ -349,7 +359,9 @@ public class DhtServer {
 	 *  your documentation here.
 	 */
 	public static void handleJoin(Packet p, InetSocketAddress succAdr) {
-		// your code here
+		succInfo.left = succAdr;
+		//we believe that the right integer value of the succinfo.right is the beginning of the hash range
+		succInfo.right = p.hashRange.right;
 	}
 	
 	/** Handle a get packet.
