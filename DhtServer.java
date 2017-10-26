@@ -102,6 +102,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 import java.lang.*;
+import java.lang.Math;
 
 import sun.misc.Signal;
 import sun.misc.SignalHandler;
@@ -274,7 +275,7 @@ public class DhtServer {
 	/** Leave an existing DHT.
 	 *  
 	 *	Send a leave packet to it's successor and wait until stopFlag is 
-	 * 	set to "true", which means leave packet is circle back.
+	 * 	set to "true", which means leave packet has circled back.
 	 *
 	 *	Send an update packet with the new hashRange and succInfo fields to 
 	 *  its predecessor, and sends an update packet with the predInfo 
@@ -340,13 +341,13 @@ public class DhtServer {
 	public static void join(InetSocketAddress predAdr) {
 		//setting pred information
 		predInfo.left = predAdr;
-		predInfo.right = 0;
+//		predInfo.right = predAdr.hashrange;
 		//setting my information (assuming int is the node number)
 		myInfo.left = myAdr;
-		myInfo.right = 1;
+//		myInfo.right = hashRange;
 		//successor info
 		succInfo.left = predAdr;
-		succInfo.right = 0;
+//		succInfo.right = hashrange;
 
 
 	}
@@ -375,8 +376,8 @@ public class DhtServer {
 		// it to support caching
 		InetSocketAddress replyAdr;
 		int hash = hashit(p.key);
-		int left = hashRange.left.intValue();
-		int right = hashRange.right.intValue();
+		int left = hashRange.left;
+		int right = hashRange.right;
 
 		if (left <= hash && hash <= right) {
 			// respond to request using map
@@ -408,7 +409,14 @@ public class DhtServer {
 	 *	your documentation here
 	 */
 	public static void handlePut(Packet p, InetSocketAddress senderAdr) {
-		// your code here
+		int hashrange = p.hashRange.right - p.hashRange.left;
+		int hash = Math.floorMod(hashit(p.key), hashrange);
+		//check if this packet is for us
+		if(hash >= hashRange.left && hash <= hashRange.right){
+			map.put(p.key, p.val);
+			//create success packet
+			
+		}
 	}
 
 	/** Handle a transfer packet.
@@ -426,10 +434,31 @@ public class DhtServer {
 	 *  "success", "failure" or "no match"
 	 *  @param senderAdr is the the address (ip:port) of the sender
 	 *  
-	 *  your documentation here
+	 *  We are the relay server
+	 *  Forward packet to client. First, remove clientadr, relayadr, senderinfo
+	 *   from packet
+	 *  Also, adds shortcut to rtetbl and pkt info to cache
 	 */
 	public static void handleReply(Packet p, InetSocketAddress senderAdr) {
-		// your code here
+		//add to rtetbl
+		if(!rteTbl.contains(new Pair<>(senderAdr, p.hashRange.left))){
+			rteTbl.add(new Pair<>(senderAdr, p.hashRange.left));
+		}
+		//in the case of a get
+		if(!(p.key == null) && !(p.val == null) ) {
+			//add pkt data to cache
+			cache.put(p.key, p.val);
+			//remove clientadr, relayadr, senderinfo
+			InetSocketAddress cladr = p.clientAdr;
+			p.clientAdr = null;
+			p.relayAdr = null;
+			p.senderInfo = null;
+			//FIXME:send to client
+			p.send(sock, cladr, debug);
+		}
+		//in the case of a join
+//		if(p.hashRange != )
+
 	}
 	
 	/** Handle packets received from clients or other servers
@@ -500,6 +529,19 @@ public class DhtServer {
 	 *  Once a server is selected, p is sent to that server.
 	 */
 	public static void forward(Packet p, int hash) {
-		// your code here
+		//FIXME: We think that p.hashrange is the entire range of the DHT, not sure
+		int hashRangelen = p.hashRange.right - p.hashRange.left;
+
+		Pair<InetSocketAddress,Integer> minNode = new Pair<>(null, null);
+		int min = rteTbl.get(0).right;
+		int curHash;
+		for(Pair<InetSocketAddress,Integer> node : rteTbl) {
+			curHash = Math.floorMod(hash - node.right, hashRangelen);
+			if (curHash < min) {
+				min = curHash;
+				minNode = node;
+			}
+		}
+		p.send(sock, minNode.left, debug);
 	}
 }
