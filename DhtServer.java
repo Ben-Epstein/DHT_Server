@@ -190,6 +190,7 @@ public class DhtServer {
 		rteTbl = new LinkedList<>();
 
 		// join the DHT (if not the first node)
+		//Hash range is 0 -> MAX_INT
 		hashRange = new Pair<>(0,Integer.MAX_VALUE);
 		myInfo = null;
 		succInfo = null;
@@ -340,14 +341,48 @@ public class DhtServer {
 	 */
 	public static void join(InetSocketAddress predAdr) {
 		//setting pred information
+		//left and right nodes are predAddr because we are second node
 		predInfo.left = predAdr;
-//		predInfo.right = predAdr.hashrange;
-		//setting my information (assuming int is the node number)
 		myInfo.left = myAdr;
-//		myInfo.right = hashRange;
-		//successor info
 		succInfo.left = predAdr;
-//		succInfo.right = hashrange;
+		Packet p = new Packet();
+		p.predInfo = new Pair<>(predAdr,0);
+		p.type = "join";
+		p.senderInfo = new Pair<>(myAdr, null);
+		p.ttl = 95;
+
+		p.send(sock, p.succInfo.left, debug);
+
+		Packet joinPkt = new Packet();
+		InetSocketAddress sender;
+		while (true) {
+			try { sender = joinPkt.receive(sock,debug);
+			} catch(Exception e) {
+				System.err.println("received packet failure");
+				continue;
+			}
+			if (sender == null) {
+				System.err.println("received packet failure");
+				continue;
+			}
+			if(joinPkt.type.equals("transfer")){
+				//Sender in this case is actually the predecessor
+				handleXfer(p, p.predInfo.left);
+			}
+			else if(joinPkt.type.equals("success")){
+				hashRange = joinPkt.hashRange;
+				succInfo = joinPkt.succInfo;
+				predInfo = joinPkt.predInfo;
+				predecessor = predInfo.left;
+				rteTbl.add(succInfo);
+				return;
+			}
+			else{
+				System.err.println("Bad packet, no type");
+				System.exit(-1);
+			}
+		}
+
 
 
 	}
@@ -357,12 +392,44 @@ public class DhtServer {
 	 *  @param succAdr is the socket address of the host that
 	 *  sent the join packet (the new successor)
 	 *
-	 *  your documentation here.
+	 *  Spit hashrange in half, top half to new successor
+	 *  Set the new DHT server as my successor, and change my successor's
+	 *                 predecessor to the new DHT server
+	 *  Send series of transfer packets
+	 *                 with KV pairs that fall in the DHT's new hash range
+	 *                 with type transfer
+	 *
 	 */
 	public static void handleJoin(Packet p, InetSocketAddress succAdr) {
-		succInfo.left = succAdr;
-		//we believe that the right integer value of the succinfo.right is the beginning of the hash range
-		succInfo.right = p.hashRange.right;
+		//set values in packet
+		p.predInfo = myInfo;
+		p.succInfo = succInfo;
+		int midHash = 1 + (p.hashRange.right + p.hashRange.left)/2;
+		p.hashRange = new Pair<>(midHash, p.hashRange.right);
+		//change my values
+		InetSocketAddress oldSucc = succInfo.left;
+		succInfo = p.senderInfo;
+		hashRange = new Pair<>(hashRange.left, midHash-1);
+		//update successor to have new predecessor (new DHT server)
+		Packet updatePkt = new Packet();
+		updatePkt.type = "update";
+		updatePkt.senderInfo = myInfo;
+		updatePkt.predInfo = succInfo;
+		updatePkt.send(sock, oldSucc, debug);
+		//send transfer packets to new DHT with it's map entries
+		int hashval;
+		Packet transferPkt = new Packet();
+		transferPkt.type = "transfer";
+		transferPkt.senderInfo = myInfo;
+		for(Map.Entry<String, String> entry :  map.entrySet()){
+			hashval = hashit(entry.getKey());
+			if(hashval >= midHash){
+				transferPkt.key = entry.getKey();
+				transferPkt.val = entry.getValue();
+				transferPkt.send(sock, succAdr, debug);
+			}
+		}
+
 	}
 	
 	/** Handle a get packet.
@@ -409,13 +476,13 @@ public class DhtServer {
 	 *	your documentation here
 	 */
 	public static void handlePut(Packet p, InetSocketAddress senderAdr) {
-		int hashrange = p.hashRange.right - p.hashRange.left;
+		int hashrange = Integer.MAX_VALUE;
 		int hash = Math.floorMod(hashit(p.key), hashrange);
 		//check if this packet is for us
 		if(hash >= hashRange.left && hash <= hashRange.right){
 			map.put(p.key, p.val);
 			//create success packet
-			
+
 		}
 	}
 
@@ -530,7 +597,7 @@ public class DhtServer {
 	 */
 	public static void forward(Packet p, int hash) {
 		//FIXME: We think that p.hashrange is the entire range of the DHT, not sure
-		int hashRangelen = p.hashRange.right - p.hashRange.left;
+		int hashRangelen = Integer.MAX_VALUE;
 
 		Pair<InetSocketAddress,Integer> minNode = new Pair<>(null, null);
 		int min = rteTbl.get(0).right;
