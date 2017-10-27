@@ -69,22 +69,21 @@ public class Packet {
 			// process the line
 			String left = chunks[0];
 			String right = chunks[1];
-			System.out.println(left + ":" + right);
 			if (left.equals("type")) {
 				type = right;
 			} else if (left.equals("ttl")) {
-				ttl = Integer.parseInt(right);
+				ttl = Integer.parseInt(right.trim());
 			} else if (left.equals("clientAdr")) {
 				chunks = right.split(":");
 				if (chunks.length != 2) return false;
 				clientAdr = new InetSocketAddress(chunks[0],
-						Integer.parseInt(chunks[1]));
+						Integer.parseInt(chunks[1].trim()));
 			} else if (left.equals("succInfo")) {
 				chunks = right.split(":");
 				if (chunks.length != 3) return false;
 				String ip = chunks[0];
-				int port = Integer.parseInt(chunks[1]);
-				int hash = Integer.parseInt(chunks[2]);
+				int port = Integer.parseInt(chunks[1].trim());
+				int hash = Integer.parseInt(chunks[2].trim());
 				succInfo = new
 					Pair<>(
 					new InetSocketAddress(ip,port),hash);
@@ -112,11 +111,11 @@ public class Packet {
 			else if(left.equals("key")){
 				key = right;
 			}
-			else if(left.equals("value")){
+			else if(left.equals("val")){
 				val = right;
 			}
 			else if(left.equals("tag")){
-				tag = Integer.parseInt(right);
+				tag = Integer.parseInt(right.trim());
 			}
 			else if(left.equals("relayAdr")){
 				chunks = right.split(":");
@@ -172,10 +171,10 @@ public class Packet {
 			s.append("key:"); s.append(key); s.append("\n");
 		}
 		if(val != null){
-			s.append("val: ").append(val).append("\n");
+			s.append("val:").append(val).append("\n");
 		}
 		if(tag != -1){
-			s.append("tag: ").append(tag).append("\n");
+			s.append("tag:").append(tag).append("\n");
 		}
 		if (relayAdr != null) {
 			s.append("relayAdr:");

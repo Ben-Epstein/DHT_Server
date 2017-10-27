@@ -48,10 +48,8 @@ public class DhtClient {
         pkt.key = key;
         pkt.val = val;
         pkt.type = argType;
-        pkt.clientAdr = new InetSocketAddress(IP, port);
+        pkt.clientAdr = new InetSocketAddress(IP, sock.getLocalPort());
 
-        System.out.println("key: " +pkt.key + " val: " + pkt.val + "tag: " + pkt.tag);
-        System.out.println(IP);
         InetSocketAddress adr = new InetSocketAddress(IP, port);
         pkt.send(sock, adr, true);
 
