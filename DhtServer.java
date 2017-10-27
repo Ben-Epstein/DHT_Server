@@ -279,16 +279,42 @@ public class DhtServer {
 	 * 	set to "true", which means leave packet has circled back.
 	 *
 	 *	Send an update packet with the new hashRange and succInfo fields to 
-	 *  its predecessor, and sends an update packet with the predInfo 
+	 *  its predecessor, and send an update packet with the predInfo
 	 *  field to its successor. 
 	 *	
 	 *	Transfers all keys and values to predecessor.  
 	 *	Clear all the existing cache, map and rteTbl information
 	 */
 	public static void leave() {
-		// your code here
-
-	}
+		//send leave packet to succ and wait for stopFlag
+		Packet leavePkt = new Packet();
+		leavePkt.type = "leave";
+		leavePkt.senderInfo = myInfo;
+		//FIXME: better way to wait for stopflag
+		while(!stopFlag){}
+		//send KV pairs to predecessor
+		Packet transferPkt = new Packet();
+		transferPkt.senderInfo = myInfo;
+		transferPkt.type = "transfer";
+		for (Map.Entry<String, String> entry : map.entrySet()) {
+			transferPkt.key = entry.getKey();
+			transferPkt.val = entry.getValue();
+			transferPkt.send(sock, predecessor, debug);
+		}
+		//Send update pkt with new hashrange and succInfo fields to pred
+		Packet updatePkt = new Packet();
+		updatePkt.type = "update";
+		updatePkt.succInfo = succInfo;
+		updatePkt.senderInfo = myInfo;
+		//hashrange is from pred's lowest to our highest hashrange
+		updatePkt.hashRange = new Pair<>(predInfo.right, hashRange.right);
+		updatePkt.send(sock, predecessor, debug);
+		//change updatePkt and send to successor
+		updatePkt.predInfo = predInfo;
+		updatePkt.succInfo = null;
+		updatePkt.hashRange = null;
+		updatePkt.send(sock, succInfo.left, debug);
+		}
 	
 	/** Handle a update packet from a prospective DHT node.
 	 *  @param p is the received join packet
@@ -479,10 +505,28 @@ public class DhtServer {
 		int hashrange = Integer.MAX_VALUE;
 		int hash = Math.floorMod(hashit(p.key), hashrange);
 		//check if this packet is for us
-		if(hash >= hashRange.left && hash <= hashRange.right){
-			map.put(p.key, p.val);
-			//create success packet
-
+		if(hash >= hashRange.left && hash <= hashRange.right) {
+			Packet succPkt = new Packet();
+			succPkt.type = "success";
+			succPkt.senderInfo = myInfo;
+			succPkt.key = p.key;
+			succPkt.relayAdr = p.relayAdr;
+			if (p.val == null) {
+				map.remove(p.key);
+				succPkt.val = null;
+			} else {
+				map.put(p.key, p.val);
+				succPkt.tag = p.tag;
+				succPkt.ttl = p.ttl;
+				succPkt.val = p.val;
+			}
+			succPkt.send(sock, p.relayAdr, debug);
+		}
+		else{
+			if (p.relayAdr == null) {
+				p.relayAdr = myAdr; p.clientAdr = senderAdr;
+			}
+			forward(p, hashit(p.key));
 		}
 	}
 
@@ -521,12 +565,8 @@ public class DhtServer {
 			p.clientAdr = null;
 			p.relayAdr = null;
 			p.senderInfo = null;
-			//FIXME:send to client
 			p.send(sock, cladr, debug);
 		}
-		//in the case of a join
-//		if(p.hashRange != )
-
 	}
 	
 	/** Handle packets received from clients or other servers
@@ -619,9 +659,8 @@ public class DhtServer {
 	 *  Once a server is selected, p is sent to that server.
 	 */
 	public static void forward(Packet p, int hash) {
-		//FIXME: We think that p.hashrange is the entire range of the DHT, not sure
+		if(p.ttl == 0){ System.err.println("Time to live 0"); return; }
 		int hashRangelen = Integer.MAX_VALUE;
-
 		Pair<InetSocketAddress,Integer> minNode = new Pair<>(null, null);
 		int min = rteTbl.get(0).right;
 		int curHash;
@@ -632,6 +671,7 @@ public class DhtServer {
 				minNode = node;
 			}
 		}
+		p.ttl--;
 		p.send(sock, minNode.left, debug);
 	}
 }
