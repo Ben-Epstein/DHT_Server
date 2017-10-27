@@ -490,10 +490,11 @@ public class DhtServer {
 	 *  @param p is a transfer packet
 	 *  @param senderAdr is the the address (ip:port) of the sender
 	 *  
-	 *	your documentation here
+	 *	transfer KV pairs to the new server
 	 */
 	public static void handleXfer(Packet p, InetSocketAddress senderAdr) {
-		// your code here
+		//TODO: Is there anything else this function needs?
+		map.put(p.key, p.val);
 	}
 	
 	/** Handle a reply packet.
@@ -554,7 +555,7 @@ public class DhtServer {
 		}
 	}
 	
-	/** Add an entry to the route tabe.
+	/** Add an entry to the route table.
 	 *  @param newRoute is a pair (addr,hash) where addr is the socket
 	 *  address for some server and hash is the first hash in that
 	 *  server's range
@@ -566,7 +567,21 @@ public class DhtServer {
 	 *  print the string "rteTbl=" + rteTbl. (IMPORTANT)
 	 */
 	public static void addRoute(Pair<InetSocketAddress,Integer> newRoute){
-		// your code here
+		if(rteTbl.size() < numRoutes){
+			rteTbl.add(newRoute);
+		}
+		else{
+			for(int i = 0; i < rteTbl.size(); i++){
+				if(!rteTbl.get(i).equals(succInfo)){
+					rteTbl.remove(i);
+					rteTbl.add(i, newRoute);
+					break;
+				}
+			}
+		}
+		if(debug){
+			System.out.println("rteTbl=" + rteTbl);
+		}
 	}
 
 	/** Remove an entry from the route tabe.
@@ -579,7 +594,15 @@ public class DhtServer {
 	 *  print the string "rteTbl=" + rteTbl. (IMPORTANT)
 	 */
 	public static void removeRoute(Pair<InetSocketAddress,Integer> rmRoute){
-		// your code here
+		for(int i = 0; i < rteTbl.size(); i++){
+			if(rteTbl.get(i).equals(rmRoute)){
+				rteTbl.remove(i);
+				break;
+			}
+		}
+		if(debug){
+			System.out.println("rteTbl=" + rteTbl);
+		}
 	}
 
 
