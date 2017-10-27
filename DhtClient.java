@@ -16,32 +16,35 @@ import java.net.*;
 
 public class DhtClient {
     public static void main(String args[]) throws Exception {
-        // connect to remote server
-        int port = 30123;
-        if (args.length > 1) port = Integer.parseInt(args[1]);
-        Socket sock = new Socket(args[0], port);
-
-        // create buffered reader & writer for socket's in/out streams
-        BufferedReader in = new BufferedReader(new InputStreamReader(
-                sock.getInputStream(), "US-ASCII"));
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
-                sock.getOutputStream(), "US-ASCII"));
-
-        // create buffered reader for System.in
-        BufferedReader sysin = new BufferedReader(new InputStreamReader(
-                System.in));
-
-        String line;
-        while (true) {
-            line = sysin.readLine();
-            if (line == null || line.length() == 0) break;
-            // write line on socket and print reply to System.out
-            line = line.trim();
-            out.write(line);
-            out.newLine();
-            out.flush();
-            System.out.println(in.readLine());
+        // get server address using first command-line argument
+        InetAddress IP = InetAddress.getByName(args[0]);
+        String fileName = null;
+        String argType = null;
+        String key = null;
+        String val = null;
+        int port = 60434;
+        if(args.length >= 3){
+            fileName = args[1];
+            argType = args[2];
+            key = (args.length >= 4) ? args[3] : null;
+            val = (args.length >= 5) ? args[4] : null;
         }
+
+        // open datagram socket
+        DatagramSocket sock = new DatagramSocket();
+
+        Packet pkt = new Packet();
+        pkt.key = key;
+        pkt.val = val;
+        pkt.type = argType;
+        System.out.println(IP);
+        InetSocketAddress adr = new InetSocketAddress(IP, port);
+        pkt.send(sock, adr, true);
+
+        pkt.receive(sock, true);
+
+        System.out.println("packet received:");
+        System.out.println(pkt.toString());
         sock.close();
     }
 }

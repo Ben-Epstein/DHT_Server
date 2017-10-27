@@ -63,7 +63,8 @@
  *  DHT asking other servers’ to delete it from their routing tables.  The 
  *  “transfer” type is used to transfer (key,value) pairs to a newly added 
  *  server. The “update” type is used to update the predecessor, successor, 
- *  or hash range of another DHT server, usually when a join or leave even 
+ *  server. The “update” type is used to update the predecessor, successor,
+ *  or hash range of another DHT server, usually when a join or leave even
  *  happens. 
  *
  *  Other fields and their use are described briefly below
@@ -198,6 +199,7 @@ public class DhtServer {
 		if (predecessor != null) {
 			join(predecessor);
 		} else {
+			System.out.println("no pred");
 			myInfo = new Pair<>(myAdr,0);
 			succInfo = new Pair<>(myAdr,0);
 			predInfo = new Pair<>(myAdr,0);
@@ -235,6 +237,7 @@ public class DhtServer {
 				continue;
 			}
 			if (!p.check()) {
+				System.out.println("!p.check()");
 				reply.clear();
 				reply.type = "failure";
 				reply.reason = p.reason;
@@ -377,6 +380,7 @@ public class DhtServer {
 		p.senderInfo = new Pair<>(myAdr, null);
 		p.ttl = 95;
 
+		System.out.println("Trying to join");
 		p.send(sock, p.succInfo.left, debug);
 
 		Packet joinPkt = new Packet();
@@ -400,6 +404,7 @@ public class DhtServer {
 				succInfo = joinPkt.succInfo;
 				predInfo = joinPkt.predInfo;
 				predecessor = predInfo.left;
+				System.out.println("Joined");
 				rteTbl.add(succInfo);
 				return;
 			}
