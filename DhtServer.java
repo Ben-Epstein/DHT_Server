@@ -199,7 +199,6 @@ public class DhtServer {
 		if (predecessor != null) {
 			join(predecessor);
 		} else {
-			System.out.println("no pred");
 			myInfo = new Pair<>(myAdr,0);
 			succInfo = new Pair<>(myAdr,0);
 			predInfo = new Pair<>(myAdr,0);
@@ -227,20 +226,25 @@ public class DhtServer {
 		Signal.handle(new Signal("INT"), handler); // capture ctrl+c
 		
 		while (true) {
-			try { sender = p.receive(sock,debug);
+			try {
+				sender = p.receive(sock,debug);
+				System.out.println("info: " + p.type +  " " + p.tag + " " +p.key + " " +p.val);
 			} catch(Exception e) {
+				System.out.println("exception");
 				System.err.println("received packet failure");
 				continue;
 			}
 			if (sender == null) {
+				System.out.println("no sender");
 				System.err.println("received packet failure");
 				continue;
 			}
 			if (!p.check()) {
-				System.out.println("!p.check()");
+				System.out.println(p.toString());
 				reply.clear();
 				reply.type = "failure";
 				reply.reason = p.reason;
+				System.out.println(p.reason);
 				reply.tag = p.tag;
 				reply.ttl = p.ttl;
 				reply.send(sock,sender,debug);
@@ -389,6 +393,7 @@ public class DhtServer {
 			try { sender = joinPkt.receive(sock,debug);
 			} catch(Exception e) {
 				System.err.println("received packet failure");
+				System.err.println(e.toString());
 				continue;
 			}
 			if (sender == null) {
@@ -507,10 +512,12 @@ public class DhtServer {
 	 *	your documentation here
 	 */
 	public static void handlePut(Packet p, InetSocketAddress senderAdr) {
+		System.out.println("Put was called");
 		int hashrange = Integer.MAX_VALUE;
 		int hash = Math.floorMod(hashit(p.key), hashrange);
 		//check if this packet is for us
 		if(hash >= hashRange.left && hash <= hashRange.right) {
+			System.out.println("Key: " + p.key + " val: " + p.val);
 			Packet succPkt = new Packet();
 			succPkt.type = "success";
 			succPkt.senderInfo = myInfo;
@@ -524,8 +531,9 @@ public class DhtServer {
 				succPkt.tag = p.tag;
 				succPkt.ttl = p.ttl;
 				succPkt.val = p.val;
+				System.out.println(map.get(0));
 			}
-			succPkt.send(sock, p.relayAdr, debug);
+			succPkt.send(sock, succPkt.relayAdr, debug);
 		}
 		else{
 			if (p.relayAdr == null) {
@@ -579,11 +587,13 @@ public class DhtServer {
 	 *  @param senderAdr is the address (ip:port) of the sender
 	 */
 	public static void handlePacket(Packet p, InetSocketAddress senderAdr) {
+		System.out.println("Here: packet received");
 		if (p.senderInfo != null & !p.type.equals("leave"))
 			addRoute(p.senderInfo);
 		if (p.type.equals("get")) {
 			handleGet(p,senderAdr);
 		} else if (p.type.equals("put")) {
+			System.out.println("put packet");
 			handlePut(p, senderAdr);
 		} else if (p.type.equals("transfer")) {
 			handleXfer(p, senderAdr);

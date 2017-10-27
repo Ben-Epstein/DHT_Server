@@ -30,21 +30,33 @@ public class DhtClient {
             val = (args.length >= 5) ? args[4] : null;
         }
 
+        if(fileName != null) {
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
+            String str = br.readLine();
+            while(str != null){
+                String[] chuncks = str.split(" ");
+                port = Integer.parseInt(chuncks[1]);
+                str = br.readLine();
+            }
+            br.close();
+        }
         // open datagram socket
         DatagramSocket sock = new DatagramSocket();
 
         Packet pkt = new Packet();
+        pkt.tag = 1948;
         pkt.key = key;
         pkt.val = val;
         pkt.type = argType;
+        pkt.clientAdr = new InetSocketAddress(IP, port);
+
+        System.out.println("key: " +pkt.key + " val: " + pkt.val + "tag: " + pkt.tag);
         System.out.println(IP);
         InetSocketAddress adr = new InetSocketAddress(IP, port);
         pkt.send(sock, adr, true);
 
         pkt.receive(sock, true);
 
-        System.out.println("packet received:");
-        System.out.println(pkt.toString());
         sock.close();
     }
 }
