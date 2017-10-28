@@ -139,7 +139,6 @@ public class DhtServer {
 					   "cfgFile [debug] [ predFile ] ");
 			System.exit(1);
 		}
-		//FIXME: He wrote this, but it doesn't parse his own script1 file...
 		numRoutes = Integer.parseInt(args[1]);
 		String cfgFile = args[2];
 		cacheOn = debug = false;
