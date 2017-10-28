@@ -1,0 +1,366 @@
+Trying to join
+/127.0.0.1:59635 sending packet to /127.0.0.1:58356
+CSE473 DHTPv0.1
+type:join
+senderInfo:127.0.0.1:59635:0
+predInfo:127.0.0.1:58356:0
+ttl:95
+
+/127.0.0.1:59635 received packet from /127.0.0.1:58356
+CSE473 DHTPv0.1
+type:success
+hashRange:1073741824:2147483647
+succInfo:127.0.0.1:58356:0
+predInfo:127.0.0.1:58356:0
+ttl:99
+
+Joined
+/127.0.0.1:59635 received packet from /127.0.0.1:58356
+CSE473 DHTPv0.1
+type:update
+senderInfo:127.0.0.1:58356:0
+predInfo:127.0.0.1:63338:536870912
+ttl:99
+
+NEW ROUTE: /127.0.0.1:58356:0
+rteTbl=[(/127.0.0.1:58356,0)]
+/127.0.0.1:59635 received packet from /127.0.0.1:62419
+CSE473 DHTPv0.1
+type:join
+senderInfo:127.0.0.1:62419:0
+predInfo:127.0.0.1:59635:0
+ttl:94
+
+NEW ROUTE: /127.0.0.1:62419:0
+rteTbl=[(/127.0.0.1:58356,0), (/127.0.0.1:62419,0)]
+MIDHASH:536870912
+/127.0.0.1:59635 sending packet to /127.0.0.1:58356
+CSE473 DHTPv0.1
+type:update
+senderInfo:127.0.0.1:59635:0
+predInfo:127.0.0.1:62419:536870912
+ttl:100
+
+/127.0.0.1:59635 sending packet to /127.0.0.1:62419
+CSE473 DHTPv0.1
+type:success
+hashRange:536870912:2147483647
+succInfo:127.0.0.1:58356:0
+predInfo:127.0.0.1:59635:0
+ttl:100
+
+/127.0.0.1:59635 received packet from /127.0.0.1:63338
+CSE473 DHTPv0.1
+type:put
+key:who
+val:hah
+tag:1948
+relayAdr:127.0.0.1:63338
+clientAdr:127.0.0.1:62421
+ttl:97
+
+curhash < min
+curhash < min
+/127.0.0.1:59635 sending packet to /127.0.0.1:62419
+CSE473 DHTPv0.1
+type:put
+key:who
+val:hah
+tag:1948
+relayAdr:127.0.0.1:63338
+clientAdr:127.0.0.1:62421
+ttl:96
+
+/127.0.0.1:59635 received packet from /127.0.0.1:62423
+CSE473 DHTPv0.1
+type:put
+key:blue
+val:moose
+tag:1948
+clientAdr:127.0.0.1:62423
+ttl:99
+
+curhash < min
+curhash < min
+curhash < min
+/127.0.0.1:59635 sending packet to /127.0.0.1:62419
+CSE473 DHTPv0.1
+type:put
+key:blue
+val:moose
+tag:1948
+relayAdr:127.0.0.1:59635
+clientAdr:127.0.0.1:62423
+ttl:98
+
+/127.0.0.1:59635 received packet from /127.0.0.1:62425
+CSE473 DHTPv0.1
+type:get
+key:who
+tag:1948
+clientAdr:127.0.0.1:62425
+ttl:99
+
+curhash < min
+curhash < min
+/127.0.0.1:59635 sending packet to /127.0.0.1:62419
+CSE473 DHTPv0.1
+type:get
+key:who
+tag:1948
+relayAdr:127.0.0.1:59635
+clientAdr:127.0.0.1:62425
+ttl:98
+
+/127.0.0.1:59635 received packet from /127.0.0.1:58356
+CSE473 DHTPv0.1
+type:success
+key:who
+val:hah
+tag:1948
+relayAdr:127.0.0.1:59635
+clientAdr:127.0.0.1:62425
+hashRange:0:536870911
+senderInfo:127.0.0.1:58356:0
+ttl:94
+
+NEW ROUTE: /127.0.0.1:58356:0
+rteTbl=[(/127.0.0.1:58356,0), (/127.0.0.1:62419,0), (/127.0.0.1:62419,536870912)]
+CLIENT ADR: /127.0.0.1:62425
+/127.0.0.1:59635 sending packet to /127.0.0.1:62425
+CSE473 DHTPv0.1
+type:success
+key:who
+val:hah
+tag:1948
+hashRange:0:536870911
+ttl:94
+
+/127.0.0.1:59635 received packet from /127.0.0.1:63338
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+relayAdr:127.0.0.1:63338
+clientAdr:127.0.0.1:62427
+ttl:97
+
+curhash < min
+curhash < min
+curhash < min
+/127.0.0.1:59635 sending packet to /127.0.0.1:62419
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+relayAdr:127.0.0.1:63338
+clientAdr:127.0.0.1:62427
+ttl:96
+
+/127.0.0.1:59635 received packet from /127.0.0.1:62428
+CSE473 DHTPv0.1
+type:get
+tag:1948
+clientAdr:127.0.0.1:62428
+ttl:99
+
+gets and puts require key and tag
+/127.0.0.1:59635 sending packet to /127.0.0.1:62428
+CSE473 DHTPv0.1
+type:failure
+tag:1948
+ttl:99
+
+/127.0.0.1:59635 received packet from /127.0.0.1:62430
+CSE473 DHTPv0.1
+type:put
+key:foo
+val:toast is tasty
+tag:1948
+clientAdr:127.0.0.1:62430
+ttl:99
+
+curhash < min
+curhash < min
+/127.0.0.1:59635 sending packet to /127.0.0.1:62419
+CSE473 DHTPv0.1
+type:put
+key:foo
+val:toast is tasty
+tag:1948
+relayAdr:127.0.0.1:59635
+clientAdr:127.0.0.1:62430
+ttl:98
+
+/127.0.0.1:59635 received packet from /127.0.0.1:63338
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+relayAdr:127.0.0.1:63338
+clientAdr:127.0.0.1:62433
+ttl:97
+
+curhash < min
+curhash < min
+curhash < min
+/127.0.0.1:59635 sending packet to /127.0.0.1:62419
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+relayAdr:127.0.0.1:63338
+clientAdr:127.0.0.1:62433
+ttl:96
+
+/127.0.0.1:59635 received packet from /127.0.0.1:62434
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+clientAdr:127.0.0.1:62434
+ttl:99
+
+curhash < min
+curhash < min
+curhash < min
+/127.0.0.1:59635 sending packet to /127.0.0.1:62419
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+relayAdr:127.0.0.1:59635
+clientAdr:127.0.0.1:62434
+ttl:98
+
+/127.0.0.1:59635 received packet from /127.0.0.1:62419
+CSE473 DHTPv0.1
+type:success
+key:blue
+val:moose
+tag:1948
+relayAdr:127.0.0.1:59635
+clientAdr:127.0.0.1:62434
+hashRange:536870912:2147483647
+senderInfo:127.0.0.1:62419:0
+ttl:96
+
+NEW ROUTE: /127.0.0.1:62419:0
+rteTbl=[(/127.0.0.1:58356,0), (/127.0.0.1:62419,0), (/127.0.0.1:62419,536870912)]
+CLIENT ADR: /127.0.0.1:62434
+/127.0.0.1:59635 sending packet to /127.0.0.1:62434
+CSE473 DHTPv0.1
+type:success
+key:blue
+val:moose
+tag:1948
+hashRange:536870912:2147483647
+ttl:96
+
+/127.0.0.1:59635 received packet from /127.0.0.1:58356
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+relayAdr:127.0.0.1:58356
+clientAdr:127.0.0.1:62435
+ttl:97
+
+curhash < min
+curhash < min
+curhash < min
+/127.0.0.1:59635 sending packet to /127.0.0.1:62419
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+relayAdr:127.0.0.1:58356
+clientAdr:127.0.0.1:62435
+ttl:96
+
+/127.0.0.1:59635 received packet from /127.0.0.1:63338
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+relayAdr:127.0.0.1:63338
+clientAdr:127.0.0.1:62437
+ttl:97
+
+curhash < min
+curhash < min
+curhash < min
+/127.0.0.1:59635 sending packet to /127.0.0.1:62419
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+relayAdr:127.0.0.1:63338
+clientAdr:127.0.0.1:62437
+ttl:96
+
+/127.0.0.1:59635 received packet from /127.0.0.1:62438
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+clientAdr:127.0.0.1:62438
+ttl:99
+
+curhash < min
+curhash < min
+curhash < min
+/127.0.0.1:59635 sending packet to /127.0.0.1:62419
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+relayAdr:127.0.0.1:59635
+clientAdr:127.0.0.1:62438
+ttl:98
+
+/127.0.0.1:59635 received packet from /127.0.0.1:62419
+CSE473 DHTPv0.1
+type:success
+key:blue
+val:moose
+tag:1948
+relayAdr:127.0.0.1:59635
+clientAdr:127.0.0.1:62438
+hashRange:536870912:2147483647
+senderInfo:127.0.0.1:62419:0
+ttl:96
+
+NEW ROUTE: /127.0.0.1:62419:0
+rteTbl=[(/127.0.0.1:58356,0), (/127.0.0.1:62419,0), (/127.0.0.1:62419,536870912)]
+CLIENT ADR: /127.0.0.1:62438
+/127.0.0.1:59635 sending packet to /127.0.0.1:62438
+CSE473 DHTPv0.1
+type:success
+key:blue
+val:moose
+tag:1948
+hashRange:536870912:2147483647
+ttl:96
+
+/127.0.0.1:59635 received packet from /127.0.0.1:58356
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+relayAdr:127.0.0.1:58356
+clientAdr:127.0.0.1:62439
+ttl:97
+
+curhash < min
+curhash < min
+curhash < min
+/127.0.0.1:59635 sending packet to /127.0.0.1:62419
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+relayAdr:127.0.0.1:58356
+clientAdr:127.0.0.1:62439
+ttl:96
+

@@ -1,14 +1,14 @@
 
-java DhtServer localhost 1 cfg0 $2 debug >test1/log$1$2_0 &
+java DhtServer localhost $1 cfg0 $2 debug >test1/log$1$2_0 &
 sleep 1
-java DhtServer localhost 1 cfg2 $2 debug cfg0 >test1/log$1$2_2 &
+java DhtServer localhost $1 cfg2 $2 debug cfg0 >test1/log$1$2_2 &
 sleep 1
 
 KILL_PID=$! #get the PID of server 2
 
-java DhtServer localhost 1 cfg1 $2 debug cfg0 >test1/log$1$2_1 &
+java DhtServer localhost $1 cfg1 $2 debug cfg0 >test1/log$1$2_1 &
 sleep 1
-java DhtServer localhost 1 cfg3 $2 debug cfg2 >test1/log$1$2_3 &
+java DhtServer localhost $1 cfg3 $2 debug cfg2 >test1/log$1$2_3 &
 sleep 1
 
 echo put foo bar

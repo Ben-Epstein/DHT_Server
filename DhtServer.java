@@ -441,6 +441,7 @@ public class DhtServer {
 		sucPacket.predInfo = myInfo;
 		sucPacket.succInfo = succInfo;
 		int midHash = 1 + (hashRange.right + hashRange.left)/2;
+		if(midHash < 0){ midHash = (-1*midHash)+1;}
 		System.out.println("MIDHASH:"+midHash);
 		sucPacket.hashRange = new Pair<>(midHash, hashRange.right);
 
@@ -505,6 +506,7 @@ public class DhtServer {
 			else {
 				p.type = "no match";
 			}
+			p.hashRange = hashRange;
 			p.send(sock,replyAdr,debug);
 		} else {
 			// forward around DHT
@@ -522,8 +524,7 @@ public class DhtServer {
 	 *	your documentation here
 	 */
 	public static void handlePut(Packet p, InetSocketAddress senderAdr) {
-		int hashrange = Integer.MAX_VALUE;
-		int hash = Math.floorMod(hashit(p.key), hashrange);
+		int hash = hashit(p.key);
 		//check if this packet is for us
 		if(hash >= hashRange.left && hash <= hashRange.right) {
 			Packet succPkt = new Packet();
@@ -550,7 +551,7 @@ public class DhtServer {
 			if (p.relayAdr == null) {
 				p.relayAdr = myAdr; p.clientAdr = senderAdr;
 			}
-			forward(p, hashit(p.key));
+			forward(p, hash);
 		}
 	}
 
@@ -632,10 +633,9 @@ public class DhtServer {
 	 *  print the string "rteTbl=" + rteTbl. (IMPORTANT)
 	 */
 	public static void addRoute(Pair<InetSocketAddress,Integer> newRoute){
+		System.out.println("NEW ROUTE: " + newRoute.left + ":" + newRoute.right);
 		if(!rteTbl.contains(newRoute)) {
 			if (rteTbl.size() < numRoutes) {
-//				if(newRoute.left.equals(myAdr) || newRoute.right == 0){System.err.println("MY ADDRESS 639: hash= "
-//						+newRoute.right + "IP: "+newRoute.left);}
 				if(!newRoute.left.equals(myAdr)){ rteTbl.add(newRoute); }
 			} else {
 				for (int i = 0; i < rteTbl.size(); i++) {
