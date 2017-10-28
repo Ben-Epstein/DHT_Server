@@ -735,6 +735,12 @@ public class DhtServer {
 		}
 
 		p.ttl--;
+		if(p.ttl < 0){
+			Packet failure = new Packet();
+			failure.type="failure";
+			failure.reason="time to live expired";
+			failure.send(sock, p.clientAdr, debug);
+		}
 		try {
 			p.send(sock, minNode.left, debug);
 		}catch (IllegalArgumentException e){
