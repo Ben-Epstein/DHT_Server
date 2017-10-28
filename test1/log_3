@@ -1,0 +1,118 @@
+Trying to join
+/127.0.0.1:63628 sending packet to /127.0.0.1:61086
+CSE473 DHTPv0.1
+type:join
+senderInfo:127.0.0.1:63628:0
+predInfo:127.0.0.1:61086:0
+ttl:95
+
+/127.0.0.1:63628 received packet from /127.0.0.1:61086
+CSE473 DHTPv0.1
+type:success
+hashRange:-536870911:2147483647
+succInfo:127.0.0.1:53607:0
+predInfo:127.0.0.1:61086:0
+ttl:99
+
+Joined
+/127.0.0.1:63628 received packet from /127.0.0.1:63631
+CSE473 DHTPv0.1
+type:put
+key:junk
+val:mail
+tag:1948
+clientAdr:127.0.0.1:63631
+ttl:99
+
+IN PUT FUNC: /127.0.0.1:63631
+/127.0.0.1:63628 sending packet to /127.0.0.1:63631
+CSE473 DHTPv0.1
+type:success
+key:junk
+val:mail
+tag:1948
+clientAdr:127.0.0.1:63631
+hashRange:-536870911:2147483647
+senderInfo:127.0.0.1:63628:0
+ttl:99
+
+/127.0.0.1:63628 received packet from /127.0.0.1:63633
+CSE473 DHTPv0.1
+type:get
+key:foo
+tag:1948
+clientAdr:127.0.0.1:63633
+ttl:99
+
+/127.0.0.1:63628 sending packet to /127.0.0.1:63633
+CSE473 DHTPv0.1
+type:no match
+key:foo
+tag:1948
+clientAdr:127.0.0.1:63633
+ttl:99
+
+/127.0.0.1:63628 received packet from /127.0.0.1:64931
+CSE473 DHTPv0.1
+type:get
+key:bar
+tag:1948
+clientAdr:127.0.0.1:64931
+ttl:99
+
+/127.0.0.1:63628 sending packet to /127.0.0.1:64931
+CSE473 DHTPv0.1
+type:no match
+key:bar
+tag:1948
+clientAdr:127.0.0.1:64931
+ttl:99
+
+/127.0.0.1:63628 received packet from /127.0.0.1:64934
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+clientAdr:127.0.0.1:64934
+ttl:99
+
+/127.0.0.1:63628 sending packet to /127.0.0.1:64934
+CSE473 DHTPv0.1
+type:no match
+key:blue
+tag:1948
+clientAdr:127.0.0.1:64934
+ttl:99
+
+/127.0.0.1:63628 received packet from /127.0.0.1:64938
+CSE473 DHTPv0.1
+type:get
+key:blue
+tag:1948
+clientAdr:127.0.0.1:64938
+ttl:99
+
+/127.0.0.1:63628 sending packet to /127.0.0.1:64938
+CSE473 DHTPv0.1
+type:no match
+key:blue
+tag:1948
+clientAdr:127.0.0.1:64938
+ttl:99
+
+/127.0.0.1:63628 received packet from /127.0.0.1:57855
+CSE473 DHTPv0.1
+type:get
+key:foo
+tag:1948
+clientAdr:127.0.0.1:57855
+ttl:99
+
+/127.0.0.1:63628 sending packet to /127.0.0.1:57855
+CSE473 DHTPv0.1
+type:no match
+key:foo
+tag:1948
+clientAdr:127.0.0.1:57855
+ttl:99
+

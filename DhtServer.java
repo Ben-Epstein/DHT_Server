@@ -191,8 +191,6 @@ public class DhtServer {
 		rteTbl = new LinkedList<>();
 
 		// join the DHT (if not the first node)
-		//Hash range is 0 -> MAX_INT
-		hashRange = new Pair<>(0,Integer.MAX_VALUE);
 		myInfo = null;
 		succInfo = null;
 		predInfo = null;
@@ -231,12 +229,12 @@ public class DhtServer {
 				sender = p.receive(sock,debug);
 			} catch(Exception e) {
 				System.out.println("exception: " + e);
-				System.err.println("received packet failure");
+				System.err.println("received packet failure: " + e);
 				continue;
 			}
 			if (sender == null) {
 				System.out.println("no sender");
-				System.err.println("received packet failure");
+				System.err.println("received packet failure (no sender l.237)");
 				continue;
 			}
 			if (!p.check()) {
@@ -534,9 +532,9 @@ public class DhtServer {
 			succPkt.key = p.key;
 			succPkt.relayAdr = p.relayAdr;
 			succPkt.clientAdr = p.clientAdr;
+			succPkt.hashRange = hashRange;
 			System.out.println("IN PUT FUNC: " + succPkt.clientAdr);
 			succPkt.senderInfo = myInfo;
-			succPkt.hashRange = hashRange;
 			if (p.val == null) {
 				map.remove(p.key);
 				succPkt.val = null;
@@ -636,7 +634,9 @@ public class DhtServer {
 	public static void addRoute(Pair<InetSocketAddress,Integer> newRoute){
 		if(!rteTbl.contains(newRoute)) {
 			if (rteTbl.size() < numRoutes) {
-				rteTbl.add(newRoute);
+//				if(newRoute.left.equals(myAdr) || newRoute.right == 0){System.err.println("MY ADDRESS 639: hash= "
+//						+newRoute.right + "IP: "+newRoute.left);}
+				if(!newRoute.left.equals(myAdr)){ rteTbl.add(newRoute); }
 			} else {
 				for (int i = 0; i < rteTbl.size(); i++) {
 					if (!rteTbl.get(i).equals(succInfo)) {
@@ -690,7 +690,7 @@ public class DhtServer {
 		if(p.ttl == 0){ System.err.println("Time to live 0"); return; }
 		int hashRangelen = Integer.MAX_VALUE;
 		Pair<InetSocketAddress,Integer> minNode = new Pair<>(null, null);
-		int min = rteTbl.get(0).right;
+		int min = Integer.MAX_VALUE;
 		int curHash;
 		for(Pair<InetSocketAddress,Integer> node : rteTbl) {
 			curHash = Math.floorMod(hash - node.right, hashRangelen);
