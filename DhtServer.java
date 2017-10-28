@@ -583,7 +583,7 @@ public class DhtServer {
 		//in the case of a get
 		if(!(p.key == null) && !(p.val == null) ) {
 			//add pkt data to cache
-			cache.put(p.key, p.val);
+			if(cacheOn){cache.put(p.key, p.val);}
 			//remove clientadr, relayadr, senderinfo
 			InetSocketAddress cladr = p.clientAdr;
 			System.out.println("CLIENT ADR: "+ cladr);
