@@ -24,6 +24,7 @@ public class DhtClient {
         String val = null;
         String pred = null;
         int port = 60434;
+        //Process command-line arguments from the user
         if(args.length >= 3){
             fileName = args[1];
             argType = args[2];
@@ -31,7 +32,7 @@ public class DhtClient {
             val = (args.length >= 5) ? args[4] : null;
             pred = args.length >= 6 ? args[5] : null;
         }
-
+        //Check that the file exists, if so parse the port and ip address
         if(fileName != null) {
             BufferedReader br = new BufferedReader(new FileReader(fileName));
             String str = br.readLine();
@@ -44,17 +45,17 @@ public class DhtClient {
         }
         // open datagram socket
         DatagramSocket sock = new DatagramSocket();
-
+        //setting up packet
         Packet pkt = new Packet();
         pkt.tag = 1948;
         pkt.key = key;
         pkt.val = val;
         pkt.type = argType;
         pkt.clientAdr = new InetSocketAddress(IP, sock.getLocalPort());
-
+        //send packet to the server
         InetSocketAddress adr = new InetSocketAddress(IP, port);
         pkt.send(sock, adr, true);
-
+        //get response from server
         pkt.receive(sock, true);
 
         sock.close();

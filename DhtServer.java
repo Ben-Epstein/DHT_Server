@@ -229,12 +229,10 @@ public class DhtServer {
 			try {
 				sender = p.receive(sock,debug);
 			} catch(Exception e) {
-				System.out.println("exception: " + e);
 				System.err.println("received packet failure: " + e);
 				continue;
 			}
 			if (sender == null) {
-				System.out.println("no sender");
 				System.err.println("received packet failure (no sender l.237)");
 				continue;
 			}
@@ -242,7 +240,6 @@ public class DhtServer {
 				reply.clear();
 				reply.type = "failure";
 				reply.reason = p.reason;
-				System.out.println(p.reason);
 				reply.tag = p.tag;
 				reply.ttl = p.ttl;
 				reply.send(sock,sender,debug);
@@ -262,7 +259,7 @@ public class DhtServer {
 		byte[] sbytes = null;
 		try { sbytes = s.getBytes("US-ASCII"); 
 		} catch(Exception e) {
-			System.out.println("illegal key string");
+			System.err.println("illegal key string");
 			System.exit(1);
 		}
 		int i = 0;
@@ -298,11 +295,11 @@ public class DhtServer {
 		leavePkt.senderInfo = myInfo;
 		leavePkt.send(sock, succInfo.left, debug);
 		while(!stopFlag){/*wait*/}
-		System.out.println("HERE");
 		//send KV pairs to predecessor
 		Packet transferPkt = new Packet();
 		transferPkt.senderInfo = myInfo;
 		transferPkt.type = "transfer";
+		//transfer KV pairs
 		for (Map.Entry<String, String> entry : map.entrySet()) {
 			transferPkt.key = entry.getKey();
 			transferPkt.val = entry.getValue();
@@ -377,7 +374,9 @@ public class DhtServer {
 	/** Join an existing DHT.
 	 *  @param predAdr is the socket address of a server in the DHT,
 	 *  
-	 *	your documentation here
+	 *	The join function sends a join packet to an existing server in the
+	 *  DHT. Wait for a response packet of type success, add the
+	 *  successor to the routing table.
 	 */
 	public static void join(InetSocketAddress predAdr) {
 		//setting pred information
@@ -389,34 +388,35 @@ public class DhtServer {
 		p.predInfo = new Pair<>(predAdr,0);
 		p.type = "join";
 		p.senderInfo = new Pair<>(myAdr, 0);
-		p.ttl = 95;
-
-		System.out.println("Trying to join");
 		p.send(sock, predecessor, debug);
-
+		//Create packet to be filled by predecessor
 		Packet joinPkt = new Packet();
 		InetSocketAddress sender;
 		while (true) {
+			//receive packet from predecessor
 			try { sender = joinPkt.receive(sock,debug);
 			} catch(Exception e) {
 				System.err.println("received packet failure" + e);
 				System.err.println(e.toString());
 				continue;
 			}
+			//If the sender is null, print an error message
 			if (sender == null) {
 				System.err.println("received packet failure (sender null)");
 				continue;
 			}
+			//Handle the transfer from the predecessor server
 			if(joinPkt.type.equals("transfer")){
 				//Sender in this case is actually the predecessor
 				handleXfer(p, p.predInfo.left);
 			}
 			else if(joinPkt.type.equals("success")){
+				//If the packet received is of type 'success', update the hashrange,
+				//succInfo and predInfo fields
 				hashRange = joinPkt.hashRange;
 				succInfo = joinPkt.succInfo;
 				predInfo = joinPkt.predInfo;
 				predecessor = predInfo.left;
-				System.out.println("Joined");
 				if(!rteTbl.contains(succInfo)){ rteTbl.add(succInfo); }
 				return;
 			}
@@ -449,9 +449,10 @@ public class DhtServer {
 		sucPacket.type = "success";
 		sucPacket.predInfo = myInfo;
 		sucPacket.succInfo = succInfo;
+
+		//compute the hash range for the new server
 		int midHash = 1 + (hashRange.right + hashRange.left)/2;
 		if(midHash < 0){ midHash = (-1*midHash)+1;}
-		System.out.println("MIDHASH:"+midHash);
 		sucPacket.hashRange = new Pair<>(midHash, hashRange.right);
 
 		//change my pred and succ nodes
@@ -489,32 +490,42 @@ public class DhtServer {
 	 *  @param p is a get packet
 	 *  @param senderAdr is the the socket address of the sender
 	 *
-	 *  your documentation here
+	 *  The handleGet function determines whether the packet should be handled
+	 *  by current server (either in its cache or map) and if so send a success packet
+	 *  or otherwise forward the get packet to the responsible server.
 	 */
 	public static void handleGet(Packet p, InetSocketAddress senderAdr) {
-
+		//Determine the hash of the key requested and the hashRange the
+		//current server is responsible for.
 		InetSocketAddress replyAdr;
 		int hash = hashit(p.key);
 		int left = hashRange.left;
 		int right = hashRange.right;
-
+		//check if the requested key's hash is in the range of the current server
+		//or contained in its cache
 		if ((left <= hash && hash <= right) || cache.containsKey(p.key)) {
 			// respond to request using map
 			if (p.relayAdr != null) {
 				replyAdr = p.relayAdr;
 				p.senderInfo = myInfo;
+			//If the relay address is null, then we are the relayAdr
 			} else {
 				replyAdr = senderAdr;
 			}
+			//send success packet if the current server is responsible for this key
 			if (map.containsKey(p.key)) {
 				p.type = "success"; p.val = map.get(p.key);
 			}
+			//send success packet if the current server is responsible for this key
 			else if(cache.containsKey(p.key)){
 				p.type = "success"; p.val = cache.get(p.key);
 			}
+			//If the hash is contained in our range, but the map doesn't contain the key
+			//Return 'no match'.
 			else {
 				p.type = "no match";
 			}
+			//send packet to the replyAdr
 			p.hashRange = hashRange;
 			p.send(sock,replyAdr,debug);
 		} else {
@@ -529,13 +540,17 @@ public class DhtServer {
 	/** Handle a put packet.
 	 *  @param p is a put packet
 	 *  @param senderAdr is the the socket address of the sender
-	 *  
-	 *	your documentation here
+	 *  Handle a packet to be added to the map of a server in the DHT
+	 *  by determining if it should be handled by the current server (its hash is
+	 *  contained within our hash range, or else should be forwarded to the
+	 *  proper server).
 	 */
 	public static void handlePut(Packet p, InetSocketAddress senderAdr) {
 		int hash = hashit(p.key);
 		//check if this packet is for us
 		if(hash >= hashRange.left && hash <= hashRange.right) {
+			//If the KV pair should be added to the map of the current server
+			//create a success packet to send to the client
 			Packet succPkt = new Packet();
 			succPkt.type = "success";
 			succPkt.senderInfo = myInfo;
@@ -543,20 +558,24 @@ public class DhtServer {
 			succPkt.relayAdr = p.relayAdr;
 			succPkt.clientAdr = p.clientAdr;
 			succPkt.hashRange = hashRange;
-			System.out.println("IN PUT FUNC: " + succPkt.clientAdr);
 			succPkt.senderInfo = myInfo;
+			//If the value to be put is null, remove the entry from the map
 			if (p.val == null) {
 				map.remove(p.key);
 				succPkt.val = null;
 			} else {
+				//If the vlaue is not null, add to the map of the current server
 				map.put(p.key, p.val);
+				//Update fields of success packet
 				succPkt.tag = p.tag;
 				succPkt.ttl = p.ttl;
 				succPkt.val = p.val;
 			}
+			//Send success packet to the client
 			succPkt.send(sock, succPkt.clientAdr, debug);
 		}
 		else{
+			//If the relayAdr is null, we are the relay server
 			if (p.relayAdr == null) {
 				p.relayAdr = myAdr; p.clientAdr = senderAdr;
 			}
@@ -596,7 +615,6 @@ public class DhtServer {
 			if(cacheOn){cache.put(p.key, p.val);}
 			//remove clientadr, relayadr, senderinfo
 			InetSocketAddress cladr = p.clientAdr;
-			System.out.println("CLIENT ADR: "+ cladr);
 			p.clientAdr = null;
 			p.relayAdr = null;
 			p.senderInfo = null;
@@ -642,11 +660,17 @@ public class DhtServer {
 	 *  print the string "rteTbl=" + rteTbl. (IMPORTANT)
 	 */
 	public static void addRoute(Pair<InetSocketAddress,Integer> newRoute){
-		System.out.println("NEW ROUTE: " + newRoute.left + ":" + newRoute.right);
+		//Only add a route to the table if the table doesn't contain that route
 		if(!rteTbl.contains(newRoute)) {
+			//Check that the routing table is not already filled to capacity
 			if (rteTbl.size() < numRoutes) {
-				if(!newRoute.left.equals(myAdr)){ rteTbl.add(newRoute); }
+				//Add newRoute to the retTbl
+				if (!newRoute.left.equals(myAdr)) {
+					rteTbl.add(newRoute);
+				}
 			} else {
+				//If the capacity of the table has been met, remove the first entry
+				//That is not the successor and add the newRoute
 				for (int i = 0; i < rteTbl.size(); i++) {
 					if (!rteTbl.get(i).equals(succInfo)) {
 						rteTbl.remove(i);
@@ -701,10 +725,10 @@ public class DhtServer {
 		Pair<InetSocketAddress,Integer> minNode = new Pair<>(null, null);
 		int min = Integer.MAX_VALUE;
 		int curHash;
+		//Finding the "closest" hash value to the query
 		for(Pair<InetSocketAddress,Integer> node : rteTbl) {
 			curHash = Math.floorMod(hash - node.right, hashRangelen);
 			if (curHash <= min) {
-				System.out.println("curhash < min");
 				min = curHash;
 				minNode = node;
 			}
