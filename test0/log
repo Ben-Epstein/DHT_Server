@@ -1,0 +1,160 @@
+/127.0.0.1:65320 received packet from /127.0.0.1:65321
+CSE473 DHTPv0.1
+type:put
+key:foo
+val:bar
+tag:1948
+clientAdr:127.0.0.1:65321
+ttl:99
+
+IN PUT FUNC: /127.0.0.1:65321
+/127.0.0.1:65320 sending packet to /127.0.0.1:65321
+CSE473 DHTPv0.1
+type:success
+key:foo
+val:bar
+tag:1948
+clientAdr:127.0.0.1:65321
+hashRange:0:2147483647
+senderInfo:127.0.0.1:65320:0
+ttl:99
+
+/127.0.0.1:65320 received packet from /127.0.0.1:65322
+CSE473 DHTPv0.1
+type:put
+key:who
+val:hah
+tag:1948
+clientAdr:127.0.0.1:65322
+ttl:99
+
+IN PUT FUNC: /127.0.0.1:65322
+/127.0.0.1:65320 sending packet to /127.0.0.1:65322
+CSE473 DHTPv0.1
+type:success
+key:who
+val:hah
+tag:1948
+clientAdr:127.0.0.1:65322
+hashRange:0:2147483647
+senderInfo:127.0.0.1:65320:0
+ttl:99
+
+/127.0.0.1:65320 received packet from /127.0.0.1:65323
+CSE473 DHTPv0.1
+type:get
+key:foo
+tag:1948
+clientAdr:127.0.0.1:65323
+ttl:99
+
+/127.0.0.1:65320 sending packet to /127.0.0.1:65323
+CSE473 DHTPv0.1
+type:success
+key:foo
+val:bar
+tag:1948
+clientAdr:127.0.0.1:65323
+ttl:99
+
+/127.0.0.1:65320 received packet from /127.0.0.1:65324
+CSE473 DHTPv0.1
+type:get
+key:who
+tag:1948
+clientAdr:127.0.0.1:65324
+ttl:99
+
+/127.0.0.1:65320 sending packet to /127.0.0.1:65324
+CSE473 DHTPv0.1
+type:success
+key:who
+val:hah
+tag:1948
+clientAdr:127.0.0.1:65324
+ttl:99
+
+/127.0.0.1:65320 received packet from /127.0.0.1:65325
+CSE473 DHTPv0.1
+type:get
+key:goodbye
+tag:1948
+clientAdr:127.0.0.1:65325
+ttl:99
+
+/127.0.0.1:65320 sending packet to /127.0.0.1:65325
+CSE473 DHTPv0.1
+type:no match
+key:goodbye
+tag:1948
+clientAdr:127.0.0.1:65325
+ttl:99
+
+/127.0.0.1:65320 received packet from /127.0.0.1:65326
+CSE473 DHTPv0.1
+type:get
+tag:1948
+clientAdr:127.0.0.1:65326
+ttl:99
+
+gets and puts require key and tag
+/127.0.0.1:65320 sending packet to /127.0.0.1:65326
+CSE473 DHTPv0.1
+type:failure
+tag:1948
+ttl:99
+
+/127.0.0.1:65320 received packet from /127.0.0.1:65327
+CSE473 DHTPv0.1
+type:get
+key:bar
+tag:1948
+clientAdr:127.0.0.1:65327
+ttl:99
+
+/127.0.0.1:65320 sending packet to /127.0.0.1:65327
+CSE473 DHTPv0.1
+type:no match
+key:bar
+tag:1948
+clientAdr:127.0.0.1:65327
+ttl:99
+
+/127.0.0.1:65320 received packet from /127.0.0.1:65328
+CSE473 DHTPv0.1
+type:put
+key:foo
+val:toast is tasty
+tag:1948
+clientAdr:127.0.0.1:65328
+ttl:99
+
+IN PUT FUNC: /127.0.0.1:65328
+/127.0.0.1:65320 sending packet to /127.0.0.1:65328
+CSE473 DHTPv0.1
+type:success
+key:foo
+val:toast is tasty
+tag:1948
+clientAdr:127.0.0.1:65328
+hashRange:0:2147483647
+senderInfo:127.0.0.1:65320:0
+ttl:99
+
+/127.0.0.1:65320 received packet from /127.0.0.1:65329
+CSE473 DHTPv0.1
+type:get
+key:foo
+tag:1948
+clientAdr:127.0.0.1:65329
+ttl:99
+
+/127.0.0.1:65320 sending packet to /127.0.0.1:65329
+CSE473 DHTPv0.1
+type:success
+key:foo
+val:toast is tasty
+tag:1948
+clientAdr:127.0.0.1:65329
+ttl:99
+

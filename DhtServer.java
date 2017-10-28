@@ -139,6 +139,7 @@ public class DhtServer {
 					   "cfgFile [debug] [ predFile ] ");
 			System.exit(1);
 		}
+		//FIXME: He wrote this, but it doesn't parse his own script1 file...
 		numRoutes = Integer.parseInt(args[1]);
 		String cfgFile = args[2];
 		cacheOn = debug = false;
@@ -374,9 +375,9 @@ public class DhtServer {
 	public static void join(InetSocketAddress predAdr) {
 		//setting pred information
 		//left and right nodes are predAddr because we are second node
-		predInfo.left = predAdr;
-		myInfo.left = myAdr;
-		succInfo.left = predAdr;
+		myInfo = new Pair<>(myAdr,0);
+		succInfo = new Pair<>(predAdr,0);
+		predInfo = new Pair<>(predAdr,0);
 		Packet p = new Packet();
 		p.predInfo = new Pair<>(predAdr,0);
 		p.type = "join";
@@ -384,17 +385,18 @@ public class DhtServer {
 		p.ttl = 95;
 
 		System.out.println("Trying to join");
-		p.send(sock, p.succInfo.left, debug);
+		p.send(sock, predecessor, debug);
 
 		Packet joinPkt = new Packet();
 		InetSocketAddress sender;
 		while (true) {
 			try { sender = joinPkt.receive(sock,debug);
 			} catch(Exception e) {
-				System.err.println("received packet failure");
+				System.err.println("received packet failure" + e);
 				System.err.println(e.toString());
 				continue;
 			}
+			//FIXME: sender is null right now
 			if (sender == null) {
 				System.err.println("received packet failure");
 				continue;

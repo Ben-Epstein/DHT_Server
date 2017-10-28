@@ -1,0 +1,8 @@
+Trying to join
+/127.0.0.1:59561 sending packet to /127.0.0.1:61176
+CSE473 DHTPv0.1
+type:join
+senderInfo:127.0.0.1:59561:null
+predInfo:127.0.0.1:61176:0
+ttl:95
+

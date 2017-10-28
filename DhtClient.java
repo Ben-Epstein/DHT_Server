@@ -22,12 +22,14 @@ public class DhtClient {
         String argType = null;
         String key = null;
         String val = null;
+        String pred = null;
         int port = 60434;
         if(args.length >= 3){
             fileName = args[1];
             argType = args[2];
             key = (args.length >= 4) ? args[3] : null;
             val = (args.length >= 5) ? args[4] : null;
+            pred = args.length >= 6 ? args[5] : null;
         }
 
         if(fileName != null) {

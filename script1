@@ -1,4 +1,3 @@
-cd ../
 
 java DhtServer localhost $1 cfg0 $2 debug >test1/log$1$2_0 &
 sleep 1
