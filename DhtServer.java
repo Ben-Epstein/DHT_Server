@@ -215,7 +215,8 @@ public class DhtServer {
 		 * function and leave the program.
 		 */ 
 		SignalHandler handler = new SignalHandler() {  
-		    public void handle(Signal signal) {  
+		    public void handle(Signal signal) {
+		    	System.err.println("TERMINATED");
 		        leave();
 		        System.exit(0);
 		    }  
@@ -295,8 +296,9 @@ public class DhtServer {
 		Packet leavePkt = new Packet();
 		leavePkt.type = "leave";
 		leavePkt.senderInfo = myInfo;
-		//FIXME: better way to wait for stopflag
-		while(!stopFlag){}
+		leavePkt.send(sock, succInfo.left, debug);
+		while(!stopFlag){/*wait*/}
+		System.out.println("HERE");
 		//send KV pairs to predecessor
 		Packet transferPkt = new Packet();
 		transferPkt.senderInfo = myInfo;
@@ -304,22 +306,29 @@ public class DhtServer {
 		for (Map.Entry<String, String> entry : map.entrySet()) {
 			transferPkt.key = entry.getKey();
 			transferPkt.val = entry.getValue();
-			transferPkt.send(sock, predecessor, debug);
+			transferPkt.send(sock, predInfo.left, debug);
 		}
 		//Send update pkt with new hashrange and succInfo fields to pred
 		Packet updatePkt = new Packet();
 		updatePkt.type = "update";
 		updatePkt.succInfo = succInfo;
 		updatePkt.senderInfo = myInfo;
+		updatePkt.succInfo = succInfo;
+
 		//hashrange is from pred's lowest to our highest hashrange
 		updatePkt.hashRange = new Pair<>(predInfo.right, hashRange.right);
-		updatePkt.send(sock, predecessor, debug);
+		updatePkt.send(sock, predInfo.left, debug);
+
 		//change updatePkt and send to successor
-		updatePkt.predInfo = predInfo;
-		updatePkt.succInfo = null;
-		updatePkt.hashRange = null;
-		updatePkt.send(sock, succInfo.left, debug);
-		}
+		Packet updateSucPkt = new Packet();
+		updateSucPkt.predInfo = predInfo;
+		updateSucPkt.send(sock, succInfo.left, debug);
+
+		//clear map, cache and rtetbl
+		map.clear();
+		cache.clear();
+		rteTbl.clear();
+	}
 	
 	/** Handle a update packet from a prospective DHT node.
 	 *  @param p is the received join packet
