@@ -202,6 +202,7 @@ public class DhtServer {
 			myInfo = new Pair<>(myAdr,0);
 			succInfo = new Pair<>(myAdr,0);
 			predInfo = new Pair<>(myAdr,0);
+			hashRange = new Pair<>(0, Integer.MAX_VALUE);
 		}
 
 
@@ -380,7 +381,7 @@ public class DhtServer {
 		Packet p = new Packet();
 		p.predInfo = new Pair<>(predAdr,0);
 		p.type = "join";
-		p.senderInfo = new Pair<>(myAdr, null);
+		p.senderInfo = new Pair<>(myAdr, 0);
 		p.ttl = 95;
 
 		System.out.println("Trying to join");
@@ -395,9 +396,8 @@ public class DhtServer {
 				System.err.println(e.toString());
 				continue;
 			}
-			//FIXME: sender is null right now
 			if (sender == null) {
-				System.err.println("received packet failure");
+				System.err.println("received packet failure (sender null)");
 				continue;
 			}
 			if(joinPkt.type.equals("transfer")){
@@ -410,7 +410,7 @@ public class DhtServer {
 				predInfo = joinPkt.predInfo;
 				predecessor = predInfo.left;
 				System.out.println("Joined");
-				rteTbl.add(succInfo);
+				if(!rteTbl.contains(succInfo)){ rteTbl.add(succInfo); }
 				return;
 			}
 			else{
@@ -437,21 +437,28 @@ public class DhtServer {
 	 *
 	 */
 	public static void handleJoin(Packet p, InetSocketAddress succAdr) {
-		//set values in packet
-		p.predInfo = myInfo;
-		p.succInfo = succInfo;
-		int midHash = 1 + (p.hashRange.right + p.hashRange.left)/2;
-		p.hashRange = new Pair<>(midHash, p.hashRange.right);
-		//change my values
+		//create success packet
+		Packet sucPacket = new Packet();
+		sucPacket.type = "success";
+		sucPacket.predInfo = myInfo;
+		sucPacket.succInfo = succInfo;
+		int midHash = 1 + (hashRange.right + hashRange.left)/2;
+		System.out.println("MIDHASH:"+midHash);
+		sucPacket.hashRange = new Pair<>(midHash, hashRange.right);
+
+		//change my pred and succ nodes
 		InetSocketAddress oldSucc = succInfo.left;
-		succInfo = p.senderInfo;
+		succInfo = new Pair<>(succAdr, midHash);
+		if(!rteTbl.contains(succInfo)){ rteTbl.add(succInfo); }
 		hashRange = new Pair<>(hashRange.left, midHash-1);
+
 		//update successor to have new predecessor (new DHT server)
 		Packet updatePkt = new Packet();
 		updatePkt.type = "update";
 		updatePkt.senderInfo = myInfo;
 		updatePkt.predInfo = succInfo;
 		updatePkt.send(sock, oldSucc, debug);
+
 		//send transfer packets to new DHT with it's map entries
 		int hashval;
 		Packet transferPkt = new Packet();
@@ -465,6 +472,8 @@ public class DhtServer {
 				transferPkt.send(sock, succAdr, debug);
 			}
 		}
+		//send success packet
+		sucPacket.send(sock, succAdr, debug);
 
 	}
 	
@@ -475,14 +484,13 @@ public class DhtServer {
 	 *  your documentation here
 	 */
 	public static void handleGet(Packet p, InetSocketAddress senderAdr) {
-		// this version is incomplete; you will have to extend
-		// it to support caching
+
 		InetSocketAddress replyAdr;
 		int hash = hashit(p.key);
 		int left = hashRange.left;
 		int right = hashRange.right;
 
-		if (left <= hash && hash <= right) {
+		if ((left <= hash && hash <= right) || cache.containsKey(p.key)) {
 			// respond to request using map
 			if (p.relayAdr != null) {
 				replyAdr = p.relayAdr;
@@ -492,7 +500,11 @@ public class DhtServer {
 			}
 			if (map.containsKey(p.key)) {
 				p.type = "success"; p.val = map.get(p.key);
-			} else {
+			}
+			else if(cache.containsKey(p.key)){
+				p.type = "success"; p.val = cache.get(p.key);
+			}
+			else {
 				p.type = "no match";
 			}
 			p.send(sock,replyAdr,debug);
@@ -622,15 +634,16 @@ public class DhtServer {
 	 *  print the string "rteTbl=" + rteTbl. (IMPORTANT)
 	 */
 	public static void addRoute(Pair<InetSocketAddress,Integer> newRoute){
-		if(rteTbl.size() < numRoutes){
-			rteTbl.add(newRoute);
-		}
-		else{
-			for(int i = 0; i < rteTbl.size(); i++){
-				if(!rteTbl.get(i).equals(succInfo)){
-					rteTbl.remove(i);
-					rteTbl.add(i, newRoute);
-					break;
+		if(!rteTbl.contains(newRoute)) {
+			if (rteTbl.size() < numRoutes) {
+				rteTbl.add(newRoute);
+			} else {
+				for (int i = 0; i < rteTbl.size(); i++) {
+					if (!rteTbl.get(i).equals(succInfo)) {
+						rteTbl.remove(i);
+						rteTbl.add(newRoute);
+						break;
+					}
 				}
 			}
 		}
@@ -681,12 +694,22 @@ public class DhtServer {
 		int curHash;
 		for(Pair<InetSocketAddress,Integer> node : rteTbl) {
 			curHash = Math.floorMod(hash - node.right, hashRangelen);
-			if (curHash < min) {
+			if (curHash <= min) {
+				System.out.println("curhash < min");
 				min = curHash;
 				minNode = node;
 			}
 		}
+
 		p.ttl--;
-		p.send(sock, minNode.left, debug);
+		try {
+			p.send(sock, minNode.left, debug);
+		}catch (IllegalArgumentException e){
+			for(Pair<InetSocketAddress,Integer> node : rteTbl) {
+				System.err.println(node.left + ", " + node.right);
+			}
+			System.err.println(minNode.left);
+			System.exit(-1);
+		}
 	}
 }

@@ -1,1 +1,75 @@
-exception: java.lang.NumberFormatException: For input string: "null"
+/127.0.0.1:61747 received packet from /127.0.0.1:55554
+CSE473 DHTPv0.1
+type:join
+senderInfo:127.0.0.1:55554:0
+predInfo:127.0.0.1:61747:0
+ttl:94
+
+rteTbl=[(/127.0.0.1:55554,0)]
+MIDHASH:1073741824
+/127.0.0.1:61747 sending packet to localhost/127.0.0.1:61747
+CSE473 DHTPv0.1
+type:update
+senderInfo:127.0.0.1:61747:0
+predInfo:127.0.0.1:55554:1073741824
+ttl:100
+
+/127.0.0.1:61747 sending packet to /127.0.0.1:55554
+CSE473 DHTPv0.1
+type:success
+hashRange:1073741824:2147483647
+succInfo:127.0.0.1:61747:0
+predInfo:127.0.0.1:61747:0
+ttl:100
+
+/127.0.0.1:61747 received packet from /127.0.0.1:61747
+CSE473 DHTPv0.1
+type:update
+senderInfo:127.0.0.1:61747:0
+predInfo:127.0.0.1:55554:1073741824
+ttl:99
+
+rteTbl=[(/127.0.0.1:55554,0), (/127.0.0.1:55554,1073741824), (/127.0.0.1:61747,0)]
+/127.0.0.1:61747 received packet from /127.0.0.1:53403
+CSE473 DHTPv0.1
+type:join
+senderInfo:127.0.0.1:53403:0
+predInfo:127.0.0.1:61747:0
+ttl:94
+
+rteTbl=[(/127.0.0.1:55554,0), (/127.0.0.1:55554,1073741824), (/127.0.0.1:61747,0), (/127.0.0.1:53403,0)]
+MIDHASH:536870912
+/127.0.0.1:61747 sending packet to /127.0.0.1:55554
+CSE473 DHTPv0.1
+type:update
+senderInfo:127.0.0.1:61747:0
+predInfo:127.0.0.1:53403:536870912
+ttl:100
+
+/127.0.0.1:61747 sending packet to /127.0.0.1:53403
+CSE473 DHTPv0.1
+type:success
+hashRange:536870912:1073741823
+succInfo:127.0.0.1:55554:1073741824
+predInfo:127.0.0.1:61747:0
+ttl:100
+
+/127.0.0.1:61747 received packet from /127.0.0.1:53404
+CSE473 DHTPv0.1
+type:put
+key:aa
+val:hah
+tag:1948
+clientAdr:127.0.0.1:53404
+ttl:99
+
+/127.0.0.1:61747 sending packet to null
+CSE473 DHTPv0.1
+type:put
+key:aa
+val:hah
+tag:1948
+relayAdr:127.0.0.1:61747
+clientAdr:127.0.0.1:53404
+ttl:98
+

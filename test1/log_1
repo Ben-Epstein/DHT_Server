@@ -1,2 +1,25 @@
-HERE
-cfg1
+Trying to join
+/127.0.0.1:55554 sending packet to /127.0.0.1:61747
+CSE473 DHTPv0.1
+type:join
+senderInfo:127.0.0.1:55554:0
+predInfo:127.0.0.1:61747:0
+ttl:95
+
+/127.0.0.1:55554 received packet from /127.0.0.1:61747
+CSE473 DHTPv0.1
+type:success
+hashRange:1073741824:2147483647
+succInfo:127.0.0.1:61747:0
+predInfo:127.0.0.1:61747:0
+ttl:99
+
+Joined
+/127.0.0.1:55554 received packet from /127.0.0.1:61747
+CSE473 DHTPv0.1
+type:update
+senderInfo:127.0.0.1:61747:0
+predInfo:127.0.0.1:53403:536870912
+ttl:99
+
+rteTbl=[(/127.0.0.1:61747,0)]

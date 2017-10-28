@@ -1,0 +1,17 @@
+Trying to join
+/127.0.0.1:50892 sending packet to /127.0.0.1:55200
+CSE473 DHTPv0.1
+type:join
+senderInfo:127.0.0.1:50892:0
+predInfo:127.0.0.1:55200:0
+ttl:95
+
+/127.0.0.1:50892 received packet from /127.0.0.1:55200
+CSE473 DHTPv0.1
+type:success
+hashRange:-536870911:2147483647
+succInfo:127.0.0.1:63618:0
+predInfo:127.0.0.1:55200:0
+ttl:99
+
+Joined

@@ -1,0 +1,75 @@
+/127.0.0.1:62327 received packet from /127.0.0.1:62210
+CSE473 DHTPv0.1
+type:join
+senderInfo:127.0.0.1:62210:0
+predInfo:127.0.0.1:62327:0
+ttl:94
+
+rteTbl=[(/127.0.0.1:62210,0)]
+/127.0.0.1:62327 sending packet to localhost/127.0.0.1:62327
+CSE473 DHTPv0.1
+type:update
+senderInfo:127.0.0.1:62327:0
+predInfo:127.0.0.1:62210:0
+ttl:100
+
+/127.0.0.1:62327 sending packet to /127.0.0.1:62210
+CSE473 DHTPv0.1
+type:success
+hashRange:1073741824:2147483647
+succInfo:127.0.0.1:62327:0
+predInfo:127.0.0.1:62327:0
+ttl:100
+
+/127.0.0.1:62327 received packet from /127.0.0.1:62327
+CSE473 DHTPv0.1
+type:update
+senderInfo:127.0.0.1:62327:0
+predInfo:127.0.0.1:62210:0
+ttl:99
+
+rteTbl=[(/127.0.0.1:62210,0), (/127.0.0.1:62327,0)]
+/127.0.0.1:62327 received packet from /127.0.0.1:55831
+CSE473 DHTPv0.1
+type:join
+senderInfo:127.0.0.1:55831:0
+predInfo:127.0.0.1:62327:0
+ttl:94
+
+rteTbl=[(/127.0.0.1:62210,0), (/127.0.0.1:62327,0), (/127.0.0.1:55831,0)]
+/127.0.0.1:62327 sending packet to /127.0.0.1:62210
+CSE473 DHTPv0.1
+type:update
+senderInfo:127.0.0.1:62327:0
+predInfo:127.0.0.1:55831:0
+ttl:100
+
+/127.0.0.1:62327 sending packet to /127.0.0.1:55831
+CSE473 DHTPv0.1
+type:success
+hashRange:536870912:1073741823
+succInfo:127.0.0.1:62210:0
+predInfo:127.0.0.1:62327:0
+ttl:100
+
+/127.0.0.1:62327 received packet from /127.0.0.1:55832
+CSE473 DHTPv0.1
+type:put
+key:who
+val:hah
+tag:1948
+clientAdr:127.0.0.1:55832
+ttl:99
+
+IN PUT FUNC: /127.0.0.1:55832
+/127.0.0.1:62327 sending packet to /127.0.0.1:55832
+CSE473 DHTPv0.1
+type:success
+key:who
+val:hah
+tag:1948
+clientAdr:127.0.0.1:55832
+hashRange:0:536870911
+senderInfo:127.0.0.1:62327:0
+ttl:99
+
