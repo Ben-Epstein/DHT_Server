@@ -167,6 +167,9 @@ public class Packet {
 		if (type != null) {
 			s.append("type:"); s.append(type); s.append("\n");
 		}
+		if (reason != null){
+			s.append("reason:"); s.append(type); s.append("\n");
+		}
 		if (key != null) {
 			s.append("key:"); s.append(key); s.append("\n");
 		}

@@ -417,7 +417,7 @@ public class DhtServer {
 				succInfo = joinPkt.succInfo;
 				predInfo = joinPkt.predInfo;
 				predecessor = predInfo.left;
-				if(!rteTbl.contains(succInfo)){ rteTbl.add(succInfo); }
+				addRoute(succInfo);
 				return;
 			}
 			else{
@@ -458,7 +458,7 @@ public class DhtServer {
 		//change my pred and succ nodes
 		InetSocketAddress oldSucc = succInfo.left;
 		succInfo = new Pair<>(succAdr, midHash);
-		if(!rteTbl.contains(succInfo)){ rteTbl.add(succInfo); }
+		addRoute(succInfo);
 		hashRange = new Pair<>(hashRange.left, midHash-1);
 
 		//update successor to have new predecessor (new DHT server)
@@ -605,9 +605,7 @@ public class DhtServer {
 	 */
 	public static void handleReply(Packet p, InetSocketAddress senderAdr) {
 		//add to rtetbl
-		if(!rteTbl.contains(new Pair<>(senderAdr, p.hashRange.left))){
-			rteTbl.add(new Pair<>(senderAdr, p.hashRange.left));
-		}
+		addRoute(new Pair<>(senderAdr, p.hashRange.left));
 		//in the case of a get
 		if(!(p.key == null) && !(p.val == null) ) {
 			//add pkt data to cache
