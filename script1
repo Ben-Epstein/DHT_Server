@@ -55,11 +55,11 @@ java DhtClient localhost cfg0 get blue
 kill -15 $KILL_PID 	# kill server 2 which generate a "TERM" signal
 wait $KILL_PID 		# wait until server 2 terminated
 
-echo get foo
-java DhtClient localhost cfg3 get foo
-
 echo get blue
 java DhtClient localhost cfg0 get blue
+
+echo get foo
+java DhtClient localhost cfg3 get foo
 
 echo get junk
 java DhtClient localhost cfg1 get junk

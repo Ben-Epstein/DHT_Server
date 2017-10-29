@@ -288,7 +288,6 @@ public class DhtServer {
 	 *	Clear all the existing cache, map and rteTbl information
 	 */
 	public static void leave() {
-		System.err.println("LEAVING: " + map.size());
 		//send leave packet to succ and wait for stopFlag
 		Packet leavePkt = new Packet();
 		leavePkt.type = "leave";
@@ -370,8 +369,6 @@ public class DhtServer {
 
 		// send the leave message to successor 
 		p.send(sock, succInfo.left, debug);
-
-		System.err.println("ROUTER2:"+p.senderInfo.left);
 	}
 	
 	/** Join an existing DHT.
@@ -750,9 +747,6 @@ public class DhtServer {
 			}
 			System.err.println(minNode.left);
 			System.exit(-1);
-		}
-		for(Pair<InetSocketAddress,Integer> node : rteTbl) {
-			System.err.println(node.left);
 		}
 	}
 }
