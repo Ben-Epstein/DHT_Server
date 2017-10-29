@@ -216,7 +216,6 @@ public class DhtServer {
 		 */ 
 		SignalHandler handler = new SignalHandler() {  
 		    public void handle(Signal signal) {
-		    	System.err.println("TERMINATED");
 		        leave();
 		        System.exit(0);
 		    }  
@@ -289,6 +288,7 @@ public class DhtServer {
 	 *	Clear all the existing cache, map and rteTbl information
 	 */
 	public static void leave() {
+		System.err.println("LEAVING: " + map.size());
 		//send leave packet to succ and wait for stopFlag
 		Packet leavePkt = new Packet();
 		leavePkt.type = "leave";
@@ -303,6 +303,7 @@ public class DhtServer {
 		for (Map.Entry<String, String> entry : map.entrySet()) {
 			transferPkt.key = entry.getKey();
 			transferPkt.val = entry.getValue();
+			System.err.println(transferPkt.key+":"+transferPkt.val);
 			transferPkt.send(sock, predInfo.left, debug);
 		}
 		//Send update pkt with new hashrange and succInfo fields to pred
@@ -364,11 +365,13 @@ public class DhtServer {
 			stopFlag = true;
 			return;
 		}
+		//remove the senderInfo from route table
+		removeRoute(p.senderInfo);
+
 		// send the leave message to successor 
 		p.send(sock, succInfo.left, debug);
 
-		//remove the senderInfo from route table
-		removeRoute(p.senderInfo);
+		System.err.println("ROUTER2:"+p.senderInfo.left);
 	}
 	
 	/** Join an existing DHT.
@@ -590,7 +593,6 @@ public class DhtServer {
 	 *	transfer KV pairs to the new server
 	 */
 	public static void handleXfer(Packet p, InetSocketAddress senderAdr) {
-		//TODO: Is there anything else this function needs?
 		map.put(p.key, p.val);
 	}
 	
@@ -695,10 +697,9 @@ public class DhtServer {
 	 *  print the string "rteTbl=" + rteTbl. (IMPORTANT)
 	 */
 	public static void removeRoute(Pair<InetSocketAddress,Integer> rmRoute){
-		for(int i = 0; i < rteTbl.size(); i++){
-			if(rteTbl.get(i).equals(rmRoute)){
+		for(int i = rteTbl.size()-1; i >= 0; i--){
+			if(rteTbl.get(i).left.equals(rmRoute.left)){
 				rteTbl.remove(i);
-				break;
 			}
 		}
 		if(debug){
@@ -720,12 +721,19 @@ public class DhtServer {
 	 *  Once a server is selected, p is sent to that server.
 	 */
 	public static void forward(Packet p, int hash) {
-		if(p.ttl == 0){ System.err.println("Time to live 0"); return; }
+		if(p.ttl <= 0){
+			Packet failure = new Packet();
+			failure.type="failure";
+			failure.reason="time to live expired";
+			failure.send(sock, p.clientAdr, debug);
+			return;
+		}
 		int hashRangelen = Integer.MAX_VALUE;
 		Pair<InetSocketAddress,Integer> minNode = new Pair<>(null, null);
 		int min = Integer.MAX_VALUE;
 		int curHash;
 		//Finding the "closest" hash value to the query
+		int i = 0;
 		for(Pair<InetSocketAddress,Integer> node : rteTbl) {
 			curHash = Math.floorMod(hash - node.right, hashRangelen);
 			if (curHash <= min) {
@@ -733,14 +741,7 @@ public class DhtServer {
 				minNode = node;
 			}
 		}
-
 		p.ttl--;
-		if(p.ttl < 0){
-			Packet failure = new Packet();
-			failure.type="failure";
-			failure.reason="time to live expired";
-			failure.send(sock, p.clientAdr, debug);
-		}
 		try {
 			p.send(sock, minNode.left, debug);
 		}catch (IllegalArgumentException e){
@@ -749,6 +750,9 @@ public class DhtServer {
 			}
 			System.err.println(minNode.left);
 			System.exit(-1);
+		}
+		for(Pair<InetSocketAddress,Integer> node : rteTbl) {
+			System.err.println(node.left);
 		}
 	}
 }

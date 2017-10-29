@@ -1,237 +1,237 @@
-/127.0.0.1:57041 received packet from /127.0.0.1:56452
+/127.0.0.1:53239 received packet from /127.0.0.1:57848
 CSE473 DHTPv0.1
 type:join
-senderInfo:127.0.0.1:56452:0
-predInfo:127.0.0.1:57041:0
+senderInfo:127.0.0.1:57848:0
+predInfo:127.0.0.1:53239:0
 ttl:99
 
-rteTbl=[(/127.0.0.1:56452,0)]
-/127.0.0.1:57041 sending packet to localhost/127.0.0.1:57041
+rteTbl=[(/127.0.0.1:57848,0)]
+/127.0.0.1:53239 sending packet to localhost/127.0.0.1:53239
 CSE473 DHTPv0.1
 type:update
-senderInfo:127.0.0.1:57041:0
-predInfo:127.0.0.1:56452:1073741824
+senderInfo:127.0.0.1:53239:0
+predInfo:127.0.0.1:57848:1073741824
 ttl:100
 
-/127.0.0.1:57041 sending packet to /127.0.0.1:56452
+/127.0.0.1:53239 sending packet to /127.0.0.1:57848
 CSE473 DHTPv0.1
 type:success
 hashRange:1073741824:2147483647
-succInfo:127.0.0.1:57041:0
-predInfo:127.0.0.1:57041:0
+succInfo:127.0.0.1:53239:0
+predInfo:127.0.0.1:53239:0
 ttl:100
 
-/127.0.0.1:57041 received packet from /127.0.0.1:57041
+/127.0.0.1:53239 received packet from /127.0.0.1:53239
 CSE473 DHTPv0.1
 type:update
-senderInfo:127.0.0.1:57041:0
-predInfo:127.0.0.1:56452:1073741824
+senderInfo:127.0.0.1:53239:0
+predInfo:127.0.0.1:57848:1073741824
 ttl:99
 
-rteTbl=[(/127.0.0.1:56452,0), (/127.0.0.1:56452,1073741824)]
-/127.0.0.1:57041 received packet from /127.0.0.1:50290
+rteTbl=[(/127.0.0.1:57848,0), (/127.0.0.1:57848,1073741824)]
+/127.0.0.1:53239 received packet from /127.0.0.1:53801
 CSE473 DHTPv0.1
 type:join
-senderInfo:127.0.0.1:50290:0
-predInfo:127.0.0.1:57041:0
+senderInfo:127.0.0.1:53801:0
+predInfo:127.0.0.1:53239:0
 ttl:99
 
-rteTbl=[(/127.0.0.1:56452,0), (/127.0.0.1:56452,1073741824), (/127.0.0.1:50290,0)]
-/127.0.0.1:57041 sending packet to /127.0.0.1:56452
+rteTbl=[(/127.0.0.1:57848,0), (/127.0.0.1:57848,1073741824), (/127.0.0.1:53801,0)]
+/127.0.0.1:53239 sending packet to /127.0.0.1:57848
 CSE473 DHTPv0.1
 type:update
-senderInfo:127.0.0.1:57041:0
-predInfo:127.0.0.1:50290:536870912
+senderInfo:127.0.0.1:53239:0
+predInfo:127.0.0.1:53801:536870912
 ttl:100
 
-/127.0.0.1:57041 sending packet to /127.0.0.1:50290
+/127.0.0.1:53239 sending packet to /127.0.0.1:53801
 CSE473 DHTPv0.1
 type:success
 hashRange:536870912:1073741823
-succInfo:127.0.0.1:56452:1073741824
-predInfo:127.0.0.1:57041:0
+succInfo:127.0.0.1:57848:1073741824
+predInfo:127.0.0.1:53239:0
 ttl:100
 
-/127.0.0.1:57041 received packet from /127.0.0.1:56452
+/127.0.0.1:53239 received packet from /127.0.0.1:57848
 CSE473 DHTPv0.1
 type:update
-senderInfo:127.0.0.1:56452:0
-predInfo:127.0.0.1:58878:536870912
+senderInfo:127.0.0.1:57848:0
+predInfo:127.0.0.1:56113:536870912
 ttl:99
 
-rteTbl=[(/127.0.0.1:56452,0), (/127.0.0.1:56452,1073741824), (/127.0.0.1:50290,0), (/127.0.0.1:50290,536870912)]
-/127.0.0.1:57041 received packet from /127.0.0.1:58879
+rteTbl=[(/127.0.0.1:57848,0), (/127.0.0.1:57848,1073741824), (/127.0.0.1:53801,0), (/127.0.0.1:53801,536870912)]
+/127.0.0.1:53239 received packet from /127.0.0.1:56114
 CSE473 DHTPv0.1
 type:put
 key:foo
 val:bar
 tag:1948
-clientAdr:127.0.0.1:58879
+clientAdr:127.0.0.1:56114
 ttl:99
 
-/127.0.0.1:57041 sending packet to /127.0.0.1:58879
+/127.0.0.1:53239 sending packet to /127.0.0.1:56114
 CSE473 DHTPv0.1
 type:success
 key:foo
 val:bar
 tag:1948
-clientAdr:127.0.0.1:58879
+clientAdr:127.0.0.1:56114
 hashRange:0:536870911
-senderInfo:127.0.0.1:57041:0
+senderInfo:127.0.0.1:53239:0
 ttl:99
 
-/127.0.0.1:57041 received packet from /127.0.0.1:58878
+/127.0.0.1:53239 received packet from /127.0.0.1:56113
 CSE473 DHTPv0.1
 type:put
 key:who
 val:hah
 tag:1948
-relayAdr:127.0.0.1:50290
-clientAdr:127.0.0.1:58880
+relayAdr:127.0.0.1:53801
+clientAdr:127.0.0.1:56115
 ttl:93
 
-/127.0.0.1:57041 sending packet to /127.0.0.1:58880
+/127.0.0.1:53239 sending packet to /127.0.0.1:56115
 CSE473 DHTPv0.1
 type:success
 key:who
 val:hah
 tag:1948
-relayAdr:127.0.0.1:50290
-clientAdr:127.0.0.1:58880
+relayAdr:127.0.0.1:53801
+clientAdr:127.0.0.1:56115
 hashRange:0:536870911
-senderInfo:127.0.0.1:57041:0
+senderInfo:127.0.0.1:53239:0
 ttl:93
 
-/127.0.0.1:57041 received packet from /127.0.0.1:58878
+/127.0.0.1:53239 received packet from /127.0.0.1:56113
 CSE473 DHTPv0.1
 type:get
 key:foo
 tag:1948
-relayAdr:127.0.0.1:58878
-clientAdr:127.0.0.1:58883
+relayAdr:127.0.0.1:56113
+clientAdr:127.0.0.1:56118
 ttl:97
 
-/127.0.0.1:57041 sending packet to /127.0.0.1:58878
+/127.0.0.1:53239 sending packet to /127.0.0.1:56113
 CSE473 DHTPv0.1
 type:success
 key:foo
 val:bar
 tag:1948
-relayAdr:127.0.0.1:58878
-clientAdr:127.0.0.1:58883
+relayAdr:127.0.0.1:56113
+clientAdr:127.0.0.1:56118
 hashRange:0:536870911
-senderInfo:127.0.0.1:57041:0
+senderInfo:127.0.0.1:53239:0
 ttl:97
 
-/127.0.0.1:57041 received packet from /127.0.0.1:58878
+/127.0.0.1:53239 received packet from /127.0.0.1:56113
 CSE473 DHTPv0.1
 type:get
 key:who
 tag:1948
-relayAdr:127.0.0.1:56452
-clientAdr:127.0.0.1:58884
+relayAdr:127.0.0.1:57848
+clientAdr:127.0.0.1:56119
 ttl:95
 
-/127.0.0.1:57041 sending packet to /127.0.0.1:56452
+/127.0.0.1:53239 sending packet to /127.0.0.1:57848
 CSE473 DHTPv0.1
 type:success
 key:who
 val:hah
 tag:1948
-relayAdr:127.0.0.1:56452
-clientAdr:127.0.0.1:58884
+relayAdr:127.0.0.1:57848
+clientAdr:127.0.0.1:56119
 hashRange:0:536870911
-senderInfo:127.0.0.1:57041:0
+senderInfo:127.0.0.1:53239:0
 ttl:95
 
-/127.0.0.1:57041 received packet from /127.0.0.1:58885
+/127.0.0.1:53239 received packet from /127.0.0.1:56120
 CSE473 DHTPv0.1
 type:get
 key:goodbye
 tag:1948
-clientAdr:127.0.0.1:58885
+clientAdr:127.0.0.1:56120
 ttl:99
 
-/127.0.0.1:57041 sending packet to /127.0.0.1:58885
+/127.0.0.1:53239 sending packet to /127.0.0.1:56120
 CSE473 DHTPv0.1
 type:no match
 key:goodbye
 tag:1948
-clientAdr:127.0.0.1:58885
+clientAdr:127.0.0.1:56120
 hashRange:0:536870911
 ttl:99
 
-/127.0.0.1:57041 received packet from /127.0.0.1:58878
+/127.0.0.1:53239 received packet from /127.0.0.1:56113
 CSE473 DHTPv0.1
 type:put
 key:foo
 val:toast is tasty
 tag:1948
-relayAdr:127.0.0.1:56452
-clientAdr:127.0.0.1:58889
+relayAdr:127.0.0.1:57848
+clientAdr:127.0.0.1:56124
 ttl:95
 
-/127.0.0.1:57041 sending packet to /127.0.0.1:58889
+/127.0.0.1:53239 sending packet to /127.0.0.1:56124
 CSE473 DHTPv0.1
 type:success
 key:foo
 val:toast is tasty
 tag:1948
-relayAdr:127.0.0.1:56452
-clientAdr:127.0.0.1:58889
+relayAdr:127.0.0.1:57848
+clientAdr:127.0.0.1:56124
 hashRange:0:536870911
-senderInfo:127.0.0.1:57041:0
+senderInfo:127.0.0.1:53239:0
 ttl:95
 
-/127.0.0.1:57041 received packet from /127.0.0.1:62120
+/127.0.0.1:53239 received packet from /127.0.0.1:56125
 CSE473 DHTPv0.1
 type:get
 key:foo
 tag:1948
-clientAdr:127.0.0.1:62120
+clientAdr:127.0.0.1:56125
 ttl:99
 
-/127.0.0.1:57041 sending packet to /127.0.0.1:62120
+/127.0.0.1:53239 sending packet to /127.0.0.1:56125
 CSE473 DHTPv0.1
 type:success
 key:foo
 val:toast is tasty
 tag:1948
-clientAdr:127.0.0.1:62120
+clientAdr:127.0.0.1:56125
 hashRange:0:536870911
 ttl:99
 
-/127.0.0.1:57041 received packet from /127.0.0.1:62124
+/127.0.0.1:53239 received packet from /127.0.0.1:56129
 CSE473 DHTPv0.1
 type:get
 key:blue
 tag:1948
-clientAdr:127.0.0.1:62124
+clientAdr:127.0.0.1:56129
 ttl:99
 
-/127.0.0.1:57041 sending packet to /127.0.0.1:56452
+/127.0.0.1:53239 sending packet to /127.0.0.1:57848
 CSE473 DHTPv0.1
 type:get
 key:blue
 tag:1948
-relayAdr:127.0.0.1:57041
-clientAdr:127.0.0.1:62124
+relayAdr:127.0.0.1:53239
+clientAdr:127.0.0.1:56129
 ttl:98
 
-/127.0.0.1:57041 received packet from /127.0.0.1:58878
+/127.0.0.1:53239 received packet from /127.0.0.1:56113
 CSE473 DHTPv0.1
 type:success
 key:blue
 val:moose
 tag:1948
-relayAdr:127.0.0.1:57041
-clientAdr:127.0.0.1:62124
+relayAdr:127.0.0.1:53239
+clientAdr:127.0.0.1:56129
 hashRange:536870912:2147483647
-senderInfo:127.0.0.1:58878:0
+senderInfo:127.0.0.1:56113:0
 ttl:94
 
-rteTbl=[(/127.0.0.1:56452,0), (/127.0.0.1:56452,1073741824), (/127.0.0.1:50290,0), (/127.0.0.1:50290,536870912), (/127.0.0.1:58878,0)]
-/127.0.0.1:57041 sending packet to /127.0.0.1:62124
+rteTbl=[(/127.0.0.1:57848,0), (/127.0.0.1:57848,1073741824), (/127.0.0.1:53801,0), (/127.0.0.1:53801,536870912), (/127.0.0.1:56113,0)]
+/127.0.0.1:53239 sending packet to /127.0.0.1:56129
 CSE473 DHTPv0.1
 type:success
 key:blue
@@ -240,37 +240,37 @@ tag:1948
 hashRange:536870912:2147483647
 ttl:94
 
-/127.0.0.1:57041 received packet from /127.0.0.1:62128
+/127.0.0.1:53239 received packet from /127.0.0.1:56133
 CSE473 DHTPv0.1
 type:get
 key:blue
 tag:1948
-clientAdr:127.0.0.1:62128
+clientAdr:127.0.0.1:56133
 ttl:99
 
-/127.0.0.1:57041 sending packet to /127.0.0.1:56452
+/127.0.0.1:53239 sending packet to /127.0.0.1:57848
 CSE473 DHTPv0.1
 type:get
 key:blue
 tag:1948
-relayAdr:127.0.0.1:57041
-clientAdr:127.0.0.1:62128
+relayAdr:127.0.0.1:53239
+clientAdr:127.0.0.1:56133
 ttl:98
 
-/127.0.0.1:57041 received packet from /127.0.0.1:58878
+/127.0.0.1:53239 received packet from /127.0.0.1:56113
 CSE473 DHTPv0.1
 type:success
 key:blue
 val:moose
 tag:1948
-relayAdr:127.0.0.1:57041
-clientAdr:127.0.0.1:62128
+relayAdr:127.0.0.1:53239
+clientAdr:127.0.0.1:56133
 hashRange:536870912:2147483647
-senderInfo:127.0.0.1:58878:0
+senderInfo:127.0.0.1:56113:0
 ttl:94
 
-rteTbl=[(/127.0.0.1:56452,0), (/127.0.0.1:56452,1073741824), (/127.0.0.1:50290,0), (/127.0.0.1:50290,536870912), (/127.0.0.1:58878,0), (/127.0.0.1:58878,536870912)]
-/127.0.0.1:57041 sending packet to /127.0.0.1:62128
+rteTbl=[(/127.0.0.1:57848,0), (/127.0.0.1:57848,1073741824), (/127.0.0.1:53801,0), (/127.0.0.1:53801,536870912), (/127.0.0.1:56113,0), (/127.0.0.1:56113,536870912)]
+/127.0.0.1:53239 sending packet to /127.0.0.1:56133
 CSE473 DHTPv0.1
 type:success
 key:blue
@@ -279,33 +279,76 @@ tag:1948
 hashRange:536870912:2147483647
 ttl:94
 
-/127.0.0.1:57041 received packet from /127.0.0.1:58878
+/127.0.0.1:53239 received packet from /127.0.0.1:56113
 CSE473 DHTPv0.1
 type:leave
-senderInfo:127.0.0.1:56452:0
+senderInfo:127.0.0.1:57848:0
 ttl:98
 
-/127.0.0.1:57041 sending packet to /127.0.0.1:50290
+rteTbl=[(/127.0.0.1:53801,0), (/127.0.0.1:53801,536870912), (/127.0.0.1:56113,0), (/127.0.0.1:56113,536870912)]
+/127.0.0.1:53239 sending packet to /127.0.0.1:53801
 CSE473 DHTPv0.1
 type:leave
-senderInfo:127.0.0.1:56452:0
+senderInfo:127.0.0.1:57848:0
 ttl:98
 
-rteTbl=[(/127.0.0.1:56452,1073741824), (/127.0.0.1:50290,0), (/127.0.0.1:50290,536870912), (/127.0.0.1:58878,0), (/127.0.0.1:58878,536870912)]
-/127.0.0.1:57041 received packet from /127.0.0.1:62129
+/127.0.0.1:53239 received packet from /127.0.0.1:56113
+CSE473 DHTPv0.1
+type:get
+key:foo
+tag:1948
+relayAdr:127.0.0.1:56113
+clientAdr:127.0.0.1:56134
+ttl:97
+
+/127.0.0.1:53239 sending packet to /127.0.0.1:56113
+CSE473 DHTPv0.1
+type:success
+key:foo
+val:toast is tasty
+tag:1948
+relayAdr:127.0.0.1:56113
+clientAdr:127.0.0.1:56134
+hashRange:0:536870911
+senderInfo:127.0.0.1:53239:0
+ttl:97
+
+/127.0.0.1:53239 received packet from /127.0.0.1:56135
 CSE473 DHTPv0.1
 type:get
 key:blue
 tag:1948
-clientAdr:127.0.0.1:62129
+clientAdr:127.0.0.1:56135
 ttl:99
 
-/127.0.0.1:57041 sending packet to /127.0.0.1:56452
+/127.0.0.1:53239 sending packet to /127.0.0.1:56113
 CSE473 DHTPv0.1
 type:get
 key:blue
 tag:1948
-relayAdr:127.0.0.1:57041
-clientAdr:127.0.0.1:62129
+relayAdr:127.0.0.1:53239
+clientAdr:127.0.0.1:56135
 ttl:98
+
+/127.0.0.1:53239 received packet from /127.0.0.1:56113
+CSE473 DHTPv0.1
+type:success
+key:blue
+val:moose
+tag:1948
+relayAdr:127.0.0.1:53239
+clientAdr:127.0.0.1:56135
+hashRange:536870912:2147483647
+senderInfo:127.0.0.1:56113:0
+ttl:96
+
+rteTbl=[(/127.0.0.1:53801,0), (/127.0.0.1:53801,536870912), (/127.0.0.1:56113,0), (/127.0.0.1:56113,536870912)]
+/127.0.0.1:53239 sending packet to /127.0.0.1:56135
+CSE473 DHTPv0.1
+type:success
+key:blue
+val:moose
+tag:1948
+hashRange:536870912:2147483647
+ttl:96
 
