@@ -24,6 +24,7 @@ public class DhtClient {
         String val = null;
         String pred = null;
         int port = 60434;
+        InetAddress serverIP = null;
         //Process command-line arguments from the user
         if(args.length >= 3){
             fileName = args[1];
@@ -39,6 +40,7 @@ public class DhtClient {
             while(str != null){
                 String[] chuncks = str.split(" ");
                 port = Integer.parseInt(chuncks[1]);
+                serverIP = InetAddress.getByName(chuncks[0]);
                 str = br.readLine();
             }
             br.close();
@@ -53,7 +55,7 @@ public class DhtClient {
         pkt.type = argType;
         pkt.clientAdr = new InetSocketAddress(IP, sock.getLocalPort());
         //send packet to the server
-        InetSocketAddress adr = new InetSocketAddress(IP, port);
+        InetSocketAddress adr = new InetSocketAddress(serverIP, port);
         pkt.send(sock, adr, true);
         //get response from server
         pkt.receive(sock, true);
