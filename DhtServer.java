@@ -660,7 +660,7 @@ public class DhtServer {
 		//Only add a route to the table if the table doesn't contain that route
 		if(!rteTbl.contains(newRoute)) {
 			//Check that the routing table is not already filled to capacity
-			if (rteTbl.size() < numRoutes) {
+			if (rteTbl.size() <= numRoutes) {
 				//Add newRoute to the retTbl
 				if (!newRoute.left.equals(myAdr)) {
 					rteTbl.add(newRoute);
