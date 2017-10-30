@@ -1,0 +1,378 @@
+/192.168.7.1:47974 received packet from /192.168.2.4:40809
+CSE473 DHTPv0.1
+type:join
+senderInfo:192.168.2.4:40809:0
+predInfo:192.168.7.1:47974:0
+ttl:99
+
+rteTbl=[(/192.168.2.4:40809,0)]
+rteTbl=[(/192.168.2.4:40809,0), (/192.168.2.4:40809,1073741824)]
+/192.168.7.1:47974 sending packet to h7x1/192.168.7.1:47974
+CSE473 DHTPv0.1
+type:update
+senderInfo:192.168.7.1:47974:0
+predInfo:192.168.2.4:40809:1073741824
+ttl:100
+
+/192.168.7.1:47974 sending packet to /192.168.2.4:40809
+CSE473 DHTPv0.1
+type:success
+hashRange:1073741824:2147483647
+succInfo:192.168.7.1:47974:0
+predInfo:192.168.7.1:47974:0
+ttl:100
+
+/192.168.7.1:47974 received packet from /192.168.7.1:47974
+CSE473 DHTPv0.1
+type:update
+senderInfo:192.168.7.1:47974:0
+predInfo:192.168.2.4:40809:1073741824
+ttl:99
+
+rteTbl=[(/192.168.2.4:40809,0), (/192.168.2.4:40809,1073741824)]
+/192.168.7.1:47974 received packet from /192.168.3.2:42725
+CSE473 DHTPv0.1
+type:join
+senderInfo:192.168.3.2:42725:0
+predInfo:192.168.7.1:47974:0
+ttl:99
+
+rteTbl=[(/192.168.2.4:40809,0), (/192.168.2.4:40809,1073741824), (/192.168.3.2:42725,0)]
+rteTbl=[(/192.168.2.4:40809,0), (/192.168.2.4:40809,1073741824), (/192.168.3.2:42725,0), (/192.168.3.2:42725,536870912)]
+/192.168.7.1:47974 sending packet to /192.168.2.4:40809
+CSE473 DHTPv0.1
+type:update
+senderInfo:192.168.7.1:47974:0
+predInfo:192.168.3.2:42725:536870912
+ttl:100
+
+/192.168.7.1:47974 sending packet to /192.168.3.2:42725
+CSE473 DHTPv0.1
+type:success
+hashRange:536870912:1073741823
+succInfo:192.168.2.4:40809:1073741824
+predInfo:192.168.7.1:47974:0
+ttl:100
+
+/192.168.7.1:47974 received packet from /192.168.2.4:40809
+CSE473 DHTPv0.1
+type:update
+senderInfo:192.168.2.4:40809:0
+predInfo:192.168.1.1:48022:536870912
+ttl:99
+
+rteTbl=[(/192.168.2.4:40809,0), (/192.168.2.4:40809,1073741824), (/192.168.3.2:42725,0), (/192.168.3.2:42725,536870912)]
+/192.168.7.1:47974 received packet from /192.168.1.1:48022
+CSE473 DHTPv0.1
+type:update
+senderInfo:192.168.1.1:48022:0
+predInfo:192.168.5.2:57379:805306368
+ttl:99
+
+rteTbl=[(/192.168.2.4:40809,1073741824), (/192.168.3.2:42725,0), (/192.168.3.2:42725,536870912), (/192.168.1.1:48022,0)]
+/192.168.7.1:47974 received packet from /192.168.4.2:58675
+CSE473 DHTPv0.1
+type:put
+key:foo
+val:bar
+tag:1948
+clientAdr:192.168.4.2:58675
+ttl:99
+
+/192.168.7.1:47974 sending packet to /192.168.4.2:58675
+CSE473 DHTPv0.1
+type:success
+key:foo
+val:bar
+tag:1948
+clientAdr:192.168.4.2:58675
+hashRange:0:536870911
+senderInfo:192.168.7.1:47974:0
+ttl:99
+
+/192.168.7.1:47974 received packet from /192.168.5.2:57379
+CSE473 DHTPv0.1
+type:put
+key:who
+val:hah
+tag:1948
+relayAdr:192.168.3.2:42725
+clientAdr:192.168.4.2:43355
+ttl:89
+
+/192.168.7.1:47974 sending packet to /192.168.4.2:43355
+CSE473 DHTPv0.1
+type:success
+key:who
+val:hah
+tag:1948
+relayAdr:192.168.3.2:42725
+clientAdr:192.168.4.2:43355
+hashRange:0:536870911
+senderInfo:192.168.7.1:47974:0
+ttl:89
+
+/192.168.7.1:47974 received packet from /192.168.5.2:57379
+CSE473 DHTPv0.1
+type:get
+key:foo
+tag:1948
+clientAdr:192.168.4.2:34278
+ttl:95
+
+/192.168.7.1:47974 sending packet to /192.168.4.2:34278
+CSE473 DHTPv0.1
+type:success
+key:foo
+val:bar
+tag:1948
+clientAdr:192.168.4.2:34278
+hashRange:0:536870911
+ttl:95
+
+/192.168.7.1:47974 received packet from /192.168.5.2:57379
+CSE473 DHTPv0.1
+type:get
+key:who
+tag:1948
+clientAdr:192.168.4.2:48217
+ttl:91
+
+/192.168.7.1:47974 sending packet to /192.168.4.2:48217
+CSE473 DHTPv0.1
+type:success
+key:who
+val:hah
+tag:1948
+clientAdr:192.168.4.2:48217
+hashRange:0:536870911
+ttl:91
+
+/192.168.7.1:47974 received packet from /192.168.5.2:57379
+CSE473 DHTPv0.1
+type:get
+key:goodbye
+tag:1948
+clientAdr:192.168.4.2:41071
+ttl:97
+
+/192.168.7.1:47974 sending packet to /192.168.4.2:41071
+CSE473 DHTPv0.1
+type:no match
+key:goodbye
+tag:1948
+clientAdr:192.168.4.2:41071
+hashRange:0:536870911
+ttl:97
+
+/192.168.7.1:47974 received packet from /192.168.4.2:35066
+CSE473 DHTPv0.1
+type:get
+key:bar
+tag:1948
+clientAdr:192.168.4.2:35066
+ttl:99
+
+/192.168.7.1:47974 sending packet to /192.168.2.4:40809
+CSE473 DHTPv0.1
+type:get
+key:bar
+tag:1948
+clientAdr:192.168.4.2:35066
+ttl:98
+
+/192.168.7.1:47974 received packet from /192.168.5.2:57379
+CSE473 DHTPv0.1
+type:put
+key:foo
+val:toast is tasty
+tag:1948
+relayAdr:192.168.2.4:40809
+clientAdr:192.168.4.2:54697
+ttl:93
+
+/192.168.7.1:47974 sending packet to /192.168.4.2:54697
+CSE473 DHTPv0.1
+type:success
+key:foo
+val:toast is tasty
+tag:1948
+relayAdr:192.168.2.4:40809
+clientAdr:192.168.4.2:54697
+hashRange:0:536870911
+senderInfo:192.168.7.1:47974:0
+ttl:93
+
+/192.168.7.1:47974 received packet from /192.168.5.2:57379
+CSE473 DHTPv0.1
+type:get
+key:foo
+tag:1948
+clientAdr:192.168.4.2:43562
+ttl:91
+
+/192.168.7.1:47974 sending packet to /192.168.4.2:43562
+CSE473 DHTPv0.1
+type:success
+key:foo
+val:toast is tasty
+tag:1948
+clientAdr:192.168.4.2:43562
+hashRange:0:536870911
+ttl:91
+
+/192.168.7.1:47974 received packet from /192.168.5.2:57379
+CSE473 DHTPv0.1
+type:put
+key:flip
+val:flop
+tag:1948
+relayAdr:192.168.5.2:57379
+clientAdr:192.168.4.2:35731
+ttl:97
+
+/192.168.7.1:47974 sending packet to /192.168.4.2:35731
+CSE473 DHTPv0.1
+type:success
+key:flip
+val:flop
+tag:1948
+relayAdr:192.168.5.2:57379
+clientAdr:192.168.4.2:35731
+hashRange:0:536870911
+senderInfo:192.168.7.1:47974:0
+ttl:97
+
+/192.168.7.1:47974 received packet from /192.168.4.2:54077
+CSE473 DHTPv0.1
+type:put
+key:slim
+val:jim
+tag:1948
+clientAdr:192.168.4.2:54077
+ttl:99
+
+/192.168.7.1:47974 sending packet to /192.168.2.4:40809
+CSE473 DHTPv0.1
+type:put
+key:slim
+val:jim
+tag:1948
+relayAdr:192.168.7.1:47974
+clientAdr:192.168.4.2:54077
+ttl:98
+
+/192.168.7.1:47974 received packet from /192.168.5.2:57379
+CSE473 DHTPv0.1
+type:put
+key:chocolate
+val:fudge
+tag:1948
+relayAdr:192.168.2.4:40809
+clientAdr:192.168.4.2:43274
+ttl:93
+
+/192.168.7.1:47974 sending packet to /192.168.4.2:43274
+CSE473 DHTPv0.1
+type:success
+key:chocolate
+val:fudge
+tag:1948
+relayAdr:192.168.2.4:40809
+clientAdr:192.168.4.2:43274
+hashRange:0:536870911
+senderInfo:192.168.7.1:47974:0
+ttl:93
+
+/192.168.7.1:47974 received packet from /192.168.4.2:40489
+CSE473 DHTPv0.1
+type:get
+key:flim
+tag:1948
+clientAdr:192.168.4.2:40489
+ttl:99
+
+/192.168.7.1:47974 sending packet to /192.168.2.4:40809
+CSE473 DHTPv0.1
+type:get
+key:flim
+tag:1948
+clientAdr:192.168.4.2:40489
+ttl:98
+
+/192.168.7.1:47974 received packet from /192.168.5.2:57379
+CSE473 DHTPv0.1
+type:get
+key:flip
+tag:1948
+clientAdr:192.168.4.2:54946
+ttl:93
+
+/192.168.7.1:47974 sending packet to /192.168.4.2:54946
+CSE473 DHTPv0.1
+type:success
+key:flip
+val:flop
+tag:1948
+clientAdr:192.168.4.2:54946
+hashRange:0:536870911
+ttl:93
+
+/192.168.7.1:47974 received packet from /192.168.5.2:57379
+CSE473 DHTPv0.1
+type:get
+key:chocolate
+tag:1948
+clientAdr:192.168.4.2:44919
+ttl:95
+
+/192.168.7.1:47974 sending packet to /192.168.4.2:44919
+CSE473 DHTPv0.1
+type:success
+key:chocolate
+val:fudge
+tag:1948
+clientAdr:192.168.4.2:44919
+hashRange:0:536870911
+ttl:95
+
+/192.168.7.1:47974 received packet from /192.168.6.1:54577
+CSE473 DHTPv0.1
+type:join
+senderInfo:192.168.6.1:54577:0
+predInfo:192.168.7.1:47974:0
+ttl:99
+
+rteTbl=[(/192.168.3.2:42725,0), (/192.168.3.2:42725,536870912), (/192.168.1.1:48022,0), (/192.168.6.1:54577,0)]
+rteTbl=[(/192.168.3.2:42725,536870912), (/192.168.1.1:48022,0), (/192.168.6.1:54577,0), (/192.168.6.1:54577,268435456)]
+/192.168.7.1:47974 sending packet to /192.168.3.2:42725
+CSE473 DHTPv0.1
+type:update
+senderInfo:192.168.7.1:47974:0
+predInfo:192.168.6.1:54577:268435456
+ttl:100
+
+/192.168.7.1:47974 sending packet to /192.168.6.1:54577
+CSE473 DHTPv0.1
+type:transfer
+key:flip
+val:flop
+senderInfo:192.168.7.1:47974:0
+ttl:100
+
+/192.168.7.1:47974 sending packet to /192.168.6.1:54577
+CSE473 DHTPv0.1
+type:transfer
+key:who
+val:hah
+senderInfo:192.168.7.1:47974:0
+ttl:100
+
+/192.168.7.1:47974 sending packet to /192.168.6.1:54577
+CSE473 DHTPv0.1
+type:success
+hashRange:268435456:536870911
+succInfo:192.168.3.2:42725:536870912
+predInfo:192.168.7.1:47974:0
+ttl:100
+

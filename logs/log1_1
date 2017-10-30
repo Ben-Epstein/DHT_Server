@@ -1,0 +1,40 @@
+/192.168.6.1:57883 sending packet to /192.168.7.1:34774
+CSE473 DHTPv0.1
+type:join
+senderInfo:192.168.6.1:57883:0
+predInfo:192.168.7.1:34774:0
+ttl:100
+
+/192.168.6.1:57883 received packet from /192.168.7.1:34774
+CSE473 DHTPv0.1
+type:transfer
+key:chocolate
+val:fudge
+senderInfo:192.168.7.1:34774:0
+ttl:99
+
+/192.168.6.1:57883 received packet from /192.168.7.1:34774
+CSE473 DHTPv0.1
+type:success
+hashRange:134217728:268435455
+succInfo:192.168.3.2:57333:268435456
+predInfo:192.168.7.1:34774:0
+ttl:99
+
+rteTbl=[(/192.168.3.2:57333,268435456)]
+/192.168.6.1:57883 received packet from /192.168.4.2:52372
+CSE473 DHTPv0.1
+type:get
+key:flip
+tag:1948
+clientAdr:192.168.4.2:52372
+ttl:99
+
+/192.168.6.1:57883 sending packet to /192.168.3.2:57333
+CSE473 DHTPv0.1
+type:get
+key:flip
+tag:1948
+clientAdr:192.168.4.2:52372
+ttl:98
+
