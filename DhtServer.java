@@ -523,7 +523,7 @@ public class DhtServer {
 			//If the hash is contained in our range, but the map doesn't contain the key
 			//Return 'no match'.
 			else {
-				p.type = "no match";
+				p.type = "no match"; p.val = null;
 			}
 			//send packet to the replyAdr
 			p.hashRange = hashRange;
